@@ -1,11 +1,14 @@
 import React, { useState, useContext } from "react";
 import ContextComponent from "../context/ContextComponent";
 import { Link } from "react-router-dom";
+import Hatchback_image from '../assets/images/Hatchback.png'
+import SUV_image from '../assets/images/SUV.png'
+import Sedan_image from '../assets/images/Sedan.png'
 
 const bodyTypes = [
-  { name: "Hatchback", image: "src/assets/images/Hatchback.png" },
-  { name: "SUV", image: "src/assets/images/SUV.png" },
-  { name: "Sedan", image: "src/assets/images/Sedan.png" },
+  { name: "Hatchback", image: Hatchback_image },
+  { name: "SUV", image: SUV_image },
+  { name: "Sedan", image: Sedan_image },
 ];
 
 const fuelTypes = [
