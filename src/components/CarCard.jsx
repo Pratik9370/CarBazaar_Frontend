@@ -1,0 +1,59 @@
+import React, { useContext } from 'react';
+import { Bookmark, } from "lucide-react";
+import { Link } from 'react-router-dom';
+import ContextComponent from '../context/ContextComponent';
+
+export function CarCard({ car }) {
+
+  const { saveCar, unsaveCar, user, setCarDetails } = useContext(ContextComponent)
+
+  const handleSaveClick = (e,car_id) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if(!user.SavedCars.some(c => c._id==car_id)){
+      saveCar(car_id)
+    }
+    else{
+      unsaveCar(car_id)
+    }
+  }
+
+  return (
+    <Link to={'/cardetails'} onClick={()=>setCarDetails(car)}>
+      <div
+        key={car._id}
+        className="relative bg-white rounded-2xl shadow-md border border-gray-400 hover:shadow-xl transition overflow-hidden cursor-pointer"
+      >
+        {/* Bookmark icon */}
+        <div className="absolute top-2 right-2 bg-white rounded-full p-2 shadow" onClick={(e) => {
+          handleSaveClick(e, car._id)
+        }}>
+          <Bookmark size={20} className="text-gray-700" fill={user?.SavedCars?.some(c => c._id === car._id) ? 'currentColor' : 'none'} />
+        </div>
+
+        <img
+          src={car.image}
+          className="h-48 w-full object-cover"
+          alt={car.Model}
+        />
+
+        <div className="p-4">
+          <h3 className="text-lg font-semibold">{`${car.Brand} ${car.Model}`}</h3>
+          <p className="text-blue-600 font-bold text-xl">
+            ₹{car.Expected_price}
+          </p>
+
+          <div className="flex justify-between text-gray-700 text-sm mt-3">
+            <span>{car.Fuel_type}</span>
+            <span>{car.Body_type}</span>
+            <span>{car.Transmission}</span>
+          </div>
+
+          <p className="text-sm text-gray-500 mt-2">Year: {car.Reg_year}</p>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export default CarCard;
