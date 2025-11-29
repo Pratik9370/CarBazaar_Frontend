@@ -8,7 +8,7 @@ export default function ProtectedRoute({ children }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("/api/auth/verify", {
+        const res = await fetch("https://carbazaar-backend-1whv.onrender.com/api/auth/verify", {
           method: "GET",
           credentials: "include"
         });
