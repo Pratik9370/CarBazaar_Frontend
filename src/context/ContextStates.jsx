@@ -20,7 +20,7 @@ const ContextStates = ({ children }) => {
   const sendOTP = async (mobile, username) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:3000/api/auth/sendOTP', {
+      const response = await fetch('https://carbazaar-backend-1whv.onrender.com/api/auth/sendOTP', {
         method: 'Post',
         headers: {
           "Content-Type": "application/json"
@@ -39,7 +39,7 @@ const ContextStates = ({ children }) => {
   const fetchLogin = async (mobile, otp) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      const response = await fetch('https://carbazaar-backend-1whv.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ const ContextStates = ({ children }) => {
   const fetchSignup = async (name, mobile, otp) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:3000/api/auth/signup', {
+      const response = await fetch('https://carbazaar-backend-1whv.onrender.com/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ const ContextStates = ({ children }) => {
   const fetchUser = async () => {
 
     const response = await fetch(
-      `http://localhost:3000/api/auth/getUser`,
+      `https://carbazaar-backend-1whv.onrender.com/api/auth/getUser`,
       {
         method: "GET",
         headers: {
@@ -101,7 +101,7 @@ const ContextStates = ({ children }) => {
   const fetchCarsInUserCity = async () => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/auth/getCarsInUserCity`,
+      `https://carbazaar-backend-1whv.onrender.com/api/auth/getCarsInUserCity`,
       { 
         method: "GET",
         headers: {
@@ -131,7 +131,7 @@ const ContextStates = ({ children }) => {
       }
       setLoading(true)
       const response = await fetch(
-        "http://localhost:3000/api/car/registerCar",
+        "https://carbazaar-backend-1whv.onrender.com/api/car/registerCar",
         {
           method: "POST",
           body: formData,
@@ -149,7 +149,7 @@ const ContextStates = ({ children }) => {
   };
 
   const fetchCarList = async (filters) => {
-    const response = await fetch("http://localhost:3000/api/car/carList", {
+    const response = await fetch("https://carbazaar-backend-1whv.onrender.com/api/car/carList", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...filters, search }),
@@ -164,7 +164,7 @@ const ContextStates = ({ children }) => {
   const saveCar = async (car_id) => {
     const user_id = user._id
     console.log(user_id, car_id)
-    const response = await fetch('http://localhost:3000/api/car/saveCar', {
+    const response = await fetch('https://carbazaar-backend-1whv.onrender.com/api/car/saveCar', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -180,7 +180,7 @@ const ContextStates = ({ children }) => {
   const unsaveCar = async (car_id) => {
     const user_id = user._id
     console.log(user_id, car_id)
-    const response = await fetch('http://localhost:3000/api/car/unsaveCar', {
+    const response = await fetch('https://carbazaar-backend-1whv.onrender.com/api/car/unsaveCar', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -193,7 +193,7 @@ const ContextStates = ({ children }) => {
   }
 
   const addRecentlyViewedCars = async (car_id) => {
-    const response = await fetch(`http://localhost:3000/api/car/recentlyViewedCars`, {
+    const response = await fetch(`https://carbazaar-backend-1whv.onrender.com/api/car/recentlyViewedCars`, {
       method: 'Post',
       headers: {
         'Content-type': 'application/json'
