@@ -112,9 +112,8 @@ const ContextStates = ({ children }) => {
 
   const fetchCarsInUserCity = async () => {
     try {
-      const IP = await getCurrentIP();
       const response = await fetch(
-        `https://carbazaar-backend-1whv.onrender.com/api/auth/getCarsInUserCity/${IP}`,
+        `https://carbazaar-backend-1whv.onrender.com/api/auth/getCarsInUserCity`,
         {
           method: "GET",
           headers: {
