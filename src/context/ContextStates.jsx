@@ -80,7 +80,7 @@ const ContextStates = ({ children }) => {
   const fetchUser = async () => {
 
     const response = await fetch(
-      `http://localhost:3000/api/auth/getUser`,
+      `https://carbazaar-backend-1whv.onrender.com/api/auth/getUser`,
       {
         method: "GET",
         headers: {
@@ -121,7 +121,7 @@ const ContextStates = ({ children }) => {
       const { latitude, longitude } = position.coords;
 
       const response = await fetch(
-        `http://localhost:3000/api/auth/getCarsInUserCity?lat=${latitude}&long=${longitude}`,
+        `https://carbazaar-backend-1whv.onrender.com/api/auth/getCarsInUserCity?lat=${latitude}&long=${longitude}`,
         {
           method: "GET",
           headers: {
@@ -152,7 +152,7 @@ const ContextStates = ({ children }) => {
       }
       setLoading(true)
       const response = await fetch(
-        "http://localhost:3000/api/car/registerCar",
+        "https://carbazaar-backend-1whv.onrender.com/api/car/registerCar",
         {
           method: "POST",
           body: formData,
@@ -214,7 +214,7 @@ const ContextStates = ({ children }) => {
   }
 
   const addRecentlyViewedCars = async(car_id)=>{
-    const response = await fetch(`http://localhost:3000/api/car/recentlyViewedCars`,{
+    const response = await fetch(`https://carbazaar-backend-1whv.onrender.com/api/car/recentlyViewedCars`,{
       method:'Post',
       headers:{
         'Content-type':'application/json'
