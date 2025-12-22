@@ -98,24 +98,17 @@ const ContextStates = ({ children }) => {
     setRecentlyViewedCars(data.recentlyViewedCars)
   };
 
-  const getCurrentIP = async () => {
-    try {
-      const res = await fetch("https://api.ipify.org?format=json");
-      const data = await res.json();
-      return data.ip;
-    } catch (err) {
-      console.error("Error fetching IP:", err);
-      return null;
-    }
-  };
-
-
-  const fetchCarsInUserCity = async (manualCity) => {
+  const fetchCarsInUserCity = async () => {
   try {
-    const query = manualCity ? `?city=${manualCity}` : "";
     const response = await fetch(
-      `https://carbazaar-backend-1whv.onrender.com/api/auth/getCarsInUserCity${query}`,
-      { credentials: "include" }
+      `http://localhost:3000/api/auth/getCarsInUserCity`,
+      { 
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
     );
 
     if (!response.ok) throw new Error("Failed to fetch cars");
