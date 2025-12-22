@@ -10,8 +10,8 @@ export default function UserProfile() {
         <>
 
             {/* Profile Header */}
-            {user?.name ? (<div className="max-w-5xl mx-auto p-4 mt-10">
-                <div className="bg-white shadow-md rounded-2xl p-6 flex gap-6 items-center">
+            {user?.name ? (<div className="max-w-7xl mx-auto p-4 mt-10">
+                <div className="bg-white shadow-md rounded-2xl p-6 mx-2 lg:mx-18 flex gap-6 items-center">
                     <User size={40} />
 
                     <div>
@@ -22,7 +22,7 @@ export default function UserProfile() {
                     </div>
                 </div>
 
-                <SpecificCars cars={registeredCars} heading={'Registered Cars'} />
+                <SpecificCars cars={registeredCars} heading={'Registered Cars'} className='w-'/>
 
                 {/* Saved Cars Section */}
 

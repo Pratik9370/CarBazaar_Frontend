@@ -10,8 +10,11 @@ const ContextStates = ({ children }) => {
   const [user, setUser] = useState({})
   const [savedCars, setSavedCars] = useState([])
   const [registeredCars, setRegisteredCars] = useState([])
+  const [recentlyViewedCars, setRecentlyViewedCars] = useState([])
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false)
+  const [cars_in_userCity, setCars_in_userCity] = useState([])
+  const [user_city, setUser_city] = useState()
 
   const sendOTP = async (mobile, username) => {
     try {
@@ -75,49 +78,102 @@ const ContextStates = ({ children }) => {
   }
 
   const fetchUser = async () => {
-    const response = await fetch(`https://carbazaar-backend-1whv.onrender.com/api/auth/getUser`, {
-      method: 'GET',
-      headers: {
-        'Content-tupe': 'application/json'
-      },
-      credentials: 'include'
-    })
-    const data = await response.json()
-    setUser(data.user)
-    setSavedCars(data.saved_cars)
-    setRegisteredCars(data.reg_cars)
-  }
 
-  const fetchRegisterCar = async (CarDetails) => {
-  try {
-    const formData = new FormData();
-    for (const key in CarDetails) {
-      formData.append(key, CarDetails[key]);
-    }
-    setLoading(true)
     const response = await fetch(
-      "https://carbazaar-backend-1whv.onrender.com/api/car/registerCar",
+      `http://localhost:3000/api/auth/getUser`,
       {
-        method: "POST",
-        body: formData,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
       }
     );
 
     const data = await response.json();
-    await fetchUser();
-    setLoading(false)
-    alert(data.message);
-  } catch (err) {
-    console.error(err);
-  }
-};
+    setUser(data.user);
+    setSavedCars(data.saved_cars);
+    setRegisteredCars(data.reg_cars);
+    setRecentlyViewedCars(data.recentlyViewedCars)
+  };
+
+  const getCurrentPosition = () => {
+    return new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject(new Error("Geolocation not supported"));
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        resolve,
+        reject,
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+        }
+      );
+    });
+  };
+
+  const fetchCarsInUserCity = async () => {
+    try {
+      const position = await getCurrentPosition();
+      const { latitude, longitude } = position.coords;
+
+      const response = await fetch(
+        `http://localhost:3000/api/auth/getCarsInUserCity?lat=${latitude}&long=${longitude}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch cars");
+      }
+
+      const data = await response.json();
+      setUser_city(data.City);
+      setCars_in_userCity(data.cars_in_userCity);
+
+    } catch (err) {
+      console.error("Error fetching cars:", err.message);
+    }
+  };
+
+  const fetchRegisterCar = async (CarDetails) => {
+    try {
+      const formData = new FormData();
+      for (const key in CarDetails) {
+        formData.append(key, CarDetails[key]);
+      }
+      setLoading(true)
+      const response = await fetch(
+        "http://localhost:3000/api/car/registerCar",
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+      await fetchUser();
+      setLoading(false)
+      alert(data.message);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const fetchCarList = async (filters) => {
     const response = await fetch("https://carbazaar-backend-1whv.onrender.com/api/car/carList", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({...filters,search}),
+      body: JSON.stringify({ ...filters, search }),
       credentials: "include",
     });
 
@@ -150,21 +206,35 @@ const ContextStates = ({ children }) => {
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({user_id, car_id}),
+      body: JSON.stringify({ user_id, car_id }),
       credentials: 'include'
     })
     const data = await response.json()
     await fetchUser()
   }
 
+  const addRecentlyViewedCars = async(car_id)=>{
+    const response = await fetch(`http://localhost:3000/api/car/recentlyViewedCars`,{
+      method:'Post',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify({car_id}),
+      credentials:'include'
+    })
+    const data = await response.json()
+    await fetchUser()
+  }
+
   useEffect(() => {
-    fetchUser()
+    fetchUser(),
+      fetchCarsInUserCity()
   }, [])
-  
+
 
 
   return (
-    <ContextComponent.Provider value={{ search, setSearch, bodyType, setBodyType, fuelType, setFuelType, sendOTP, fetchLogin, fetchSignup, fetchCarList, fetchRegisterCar, carList, carDetails, setCarDetails, registeredCars, user, saveCar, unsaveCar, savedCars, loading }}>
+    <ContextComponent.Provider value={{ search, setSearch, bodyType, setBodyType, fuelType, setFuelType, sendOTP, fetchLogin, fetchSignup, fetchCarList, fetchRegisterCar, carList, carDetails, setCarDetails, registeredCars, user, saveCar, unsaveCar, savedCars, loading, user_city, cars_in_userCity, addRecentlyViewedCars, recentlyViewedCars }}>
       {children}
     </ContextComponent.Provider>
   )

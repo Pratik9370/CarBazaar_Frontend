@@ -10,7 +10,7 @@ import ContextComponent from '../context/ContextComponent';
 
 const Home = () => {
 
-  const {savedCars}= useContext(ContextComponent)
+  const { savedCars, cars_in_userCity, user_city, recentlyViewedCars } = useContext(ContextComponent)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -23,7 +23,9 @@ const Home = () => {
       <SellCarBox />
       {/* Car Listings Section */}
       <CategorySection />
-      {savedCars?.length>0&&(<SpecificCars cars={savedCars} heading={"Saved Cars"} />)}
+      {savedCars?.length > 0 && (<SpecificCars cars={savedCars} heading={"Saved Cars"} />)}
+      {recentlyViewedCars?.length > 0 && (<SpecificCars cars={recentlyViewedCars} heading={`Recently viewed cars`} />)}
+      {cars_in_userCity?.length > 0 && (<SpecificCars cars={cars_in_userCity} heading={`Cars available in ${user_city}`} />)}
     </div>
   );
 }
