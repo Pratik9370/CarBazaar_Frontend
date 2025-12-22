@@ -5,7 +5,7 @@ import ContextComponent from '../context/ContextComponent';
 
 export function CarCard({ car }) {
 
-  const { saveCar, unsaveCar, user, setCarDetails } = useContext(ContextComponent)
+  const { saveCar, unsaveCar, user, setCarDetails, addRecentlyViewedCars } = useContext(ContextComponent)
 
   const handleSaveClick = (e,car_id) => {
     e.stopPropagation();
@@ -19,7 +19,7 @@ export function CarCard({ car }) {
   }
 
   return (
-    <Link to={'/cardetails'} onClick={()=>setCarDetails(car)}>
+    <Link to={'/cardetails'} onClick={()=>{setCarDetails(car), addRecentlyViewedCars(car._id)}}>
       <div
         key={car._id}
         className="relative bg-white rounded-2xl shadow-md border border-gray-400 hover:shadow-xl transition overflow-hidden cursor-pointer"

@@ -24,7 +24,7 @@ export default function SpecificCars({ cars, heading }) {
               >
                 {cars.map((car) => (
                   <div
-                    key={car.id}
+                    key={car._id}
                     className="snap-start w-[250px] h-full md:w-[320px] flex-shrink-0 py-2"
                   >
                     <CarCard
