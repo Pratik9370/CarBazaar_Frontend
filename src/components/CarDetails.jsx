@@ -9,7 +9,7 @@ export default function CarDetails() {
   const [sellerModal, setSellerModal] = useState(false)
 
   const getSellerDetails = async (car_id) => {
-    const response = await fetch('http://localhost:3000/api/car/carSellerDetails', {
+    const response = await fetch('https://carbazaar-backend-1whv.onrender.com/api/car/carSellerDetails', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
