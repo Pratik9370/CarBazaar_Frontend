@@ -37,16 +37,14 @@ export function CarCard({ car }) {
           alt={car.Model}
         />
 
-        <div className="p-4">
-          <h3 className="text-lg font-semibold">{`${car.Brand} ${car.Model}`}</h3>
-          <p className="text-blue-600 font-bold text-xl">
+        <div className="p-2 md:p-4">
+          <h3 className="text-xl font-semibold">{`${car.Brand} ${car.Model}`}</h3>
+          <p className="text-blue-600 text-lg">
             ₹{car.Expected_price}
           </p>
 
-          <div className="flex justify-between text-gray-700 text-sm mt-3">
-            <span>{car.Fuel_type}</span>
-            <span>{car.Body_type}</span>
-            <span>{car.Transmission}</span>
+          <div className="flex text-gray-700 text-sm mt-3">
+            <span>{car.KM} km | {car.Fuel_type} | {car.City}</span>
           </div>
 
           <p className="text-sm text-gray-500 mt-2">Year: {car.Reg_year}</p>
