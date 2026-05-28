@@ -11,8 +11,8 @@ export function Navbar() {
 
                 {/* Logo */}
                 <div className="text-2xl font-bold tracking-tight">
-                    <span className="text-gray-800">Llec</span>
-                    <span className="text-orange-500">ar</span>
+                    <span className="text-gray-800">Car</span>
+                    <span className="text-orange-500">Bazaar</span>
                 </div>
 
                 {/* Desktop Buttons */}
