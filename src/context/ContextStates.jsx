@@ -98,29 +98,45 @@ const ContextStates = ({ children }) => {
     setRecentlyViewedCars(data.recentlyViewedCars)
   };
 
-  const fetchCarsInUserCity = async () => {
-  try {
-    const response = await fetch(
-      `https://carbazaar-backend-1whv.onrender.com/api/auth/getCarsInUserCity`,
-      { 
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
+  const fetchCarsInUserCity = () => {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        const res = await fetch(
+          "https://carbazaar-backend-1whv.onrender.com/api/auth/getCarsInUserCity",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              latitude,
+              longitude,
+            }),
+          }
+        );
+
+        const data = await res.json();
+
+        setUser_city(data.City);
+        setCars_in_userCity(data.cars_in_userCity);
+      },
+      async () => {
+        const res = await fetch(
+          "https://carbazaar-backend-1whv.onrender.com/api/auth/getCarsInUserCity",
+          {
+            method: "POST",
+          }
+        );
+
+        const data = await res.json();
+
+        setUser_city(data.City);
+        setCars_in_userCity(data.cars_in_userCity);
       }
     );
-
-    if (!response.ok) throw new Error("Failed to fetch cars");
-
-    const data = await response.json();
-    console.log("Cars fetched:", data.cars_in_userCity.length);
-    setUser_city(data.City);
-    setCars_in_userCity(data.cars_in_userCity);
-  } catch (err) {
-    console.error("Error fetching cars:", err.message);
-  }
-};
+  };
 
 
   const fetchRegisterCar = async (CarDetails) => {
@@ -206,9 +222,9 @@ const ContextStates = ({ children }) => {
   }
 
   useEffect(() => {
-    fetchUser(),
-      fetchCarsInUserCity()
-  }, [])
+    fetchUser();
+    fetchCarsInUserCity();
+}, []);
 
 
 
