@@ -9,6 +9,7 @@ import UserProfile from "./components/UserProfile";
 import CarListingForm from "./components/CarListingForm";
 import ContextComponent from "./context/ContextComponent";
 import ProtectedRoute from "./components/ProtectedRoute";
+import './App.css'
 
 export default function App() {
   const {user}=useContext(ContextComponent)
