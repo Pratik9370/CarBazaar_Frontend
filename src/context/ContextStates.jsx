@@ -224,12 +224,50 @@ const ContextStates = ({ children }) => {
   useEffect(() => {
     fetchUser();
     fetchCarsInUserCity();
-}, []);
+  }, []);
+
+
+  const fetchPrediction = async () => {
+    const predictionBody = {
+      vehicle_age: new Date().getFullYear() - Number(carDetails.Reg_year),
+      km_driven: Number(carDetails.KM),
+      fuel_type: carDetails.Fuel_type,
+      transmission_type: carDetails.Transmission,
+      brand: carDetails.Brand,
+      model: carDetails.Model,
+      engine: carDetails.Engine_capacity,      // Hardcoded for now
+      max_power: carDetails.Max_power     // Hardcoded for now
+    };
+    const response = await fetch(
+      "https://carbazaar-backend-1whv.onrender.com/api/car/predict",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(predictionBody),
+        credentials: "include"
+      }
+    );
+
+    const data = await response.json();
+
+    setCarDetails(prev => ({
+      ...prev,
+      priceRange: data.priceRange
+    }));
+  };
+
+
+  useEffect(() => {
+    fetchPrediction()
+  }, [carDetails])
+
 
 
 
   return (
-    <ContextComponent.Provider value={{ search, setSearch, bodyType, setBodyType, fuelType, setFuelType, sendOTP, fetchLogin, fetchSignup, fetchCarList, fetchRegisterCar, carList, carDetails, setCarDetails, registeredCars, user, saveCar, unsaveCar, savedCars, loading, user_city, cars_in_userCity, addRecentlyViewedCars, recentlyViewedCars }}>
+    <ContextComponent.Provider value={{ search, setSearch, bodyType, setBodyType, fuelType, setFuelType, sendOTP, fetchLogin, fetchSignup, fetchCarList, fetchRegisterCar, carList, carDetails, setCarDetails, registeredCars, user, saveCar, unsaveCar, savedCars, loading, user_city, cars_in_userCity, addRecentlyViewedCars, recentlyViewedCars, fetchPrediction }}>
       {children}
     </ContextComponent.Provider>
   )

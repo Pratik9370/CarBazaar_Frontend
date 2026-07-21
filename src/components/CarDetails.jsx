@@ -5,7 +5,7 @@ import ContextComponent from "../context/ContextComponent";
 
 export default function CarDetails() {
   const { carDetails } = useContext(ContextComponent)
-  const [seller, setSeller] = useState({name:'', mobile:''})
+  const [seller, setSeller] = useState({ name: '', mobile: '' })
   const [sellerModal, setSellerModal] = useState(false)
 
   const getSellerDetails = async (car_id) => {
@@ -18,93 +18,122 @@ export default function CarDetails() {
       credentials: 'include'
     })
     const data = await response.json()
-    await setSeller({name:data.name, mobile:data.mobile})
+    await setSeller({ name: data.name, mobile: data.mobile })
     setSellerModal(true)
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-8">
+    <div className="max-w-6xl mx-auto p-4 md:p-8 bg-[#FAFAF8]">
       {/* Car Title */}
-      <div className="text-3xl font-bold">{`${carDetails.Model}`}</div>
-      <div className="text-xl text-gray-600 mb-4">{carDetails.Variant}</div>
+      <div className="mb-6">
+        <div className="flex items-center gap-2 flex-wrap">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#1A1C20] tracking-tight">
+            {carDetails.Model}
+          </h1>
+          <span className="text-xs font-medium tracking-wide uppercase text-[#B8862E] bg-[#B8862E]/10 rounded-full px-3 py-1">
+            {carDetails.Variant}
+          </span>
+        </div>
+      </div>
 
       {/* Main Section */}
       <div className="grid md:grid-cols-3 gap-8">
 
         {/* Left – Images */}
-        <div className="md:col-span-2 space-y-4">
-          <img
-            src={carDetails.image}
-            className="w-full h-80 object-cover rounded-xl shadow"
-          />
+        <div className="md:col-span-2 space-y-3">
+          <div className="rounded-2xl overflow-hidden shadow-sm border border-black/5">
+            <img
+              src={carDetails.image}
+              className="w-full h-80 object-cover"
+            />
+          </div>
 
           <div className="grid grid-cols-3 gap-3">
             {carDetails.images?.map((img, i) => (
               <img
                 key={i}
                 src={img}
-                className="h-28 w-full object-cover rounded-lg shadow-sm"
+                className="h-28 w-full object-cover rounded-xl border border-black/5 hover:opacity-80 transition-opacity cursor-pointer"
               />
             ))}
           </div>
         </div>
 
         {/* Right – Pricing + Score */}
-        <div className="bg-white rounded-xl shadow p-5 h-fit sticky top-20">
-          <h2 className="text-2xl font-semibold mb-2">₹ {carDetails.Expected_price}</h2>
+        <div className="bg-white rounded-2xl shadow-sm border border-black/5 p-6 h-fit sticky top-20">
+          <p className="text-sm text-[#8A8A85] mb-1">Asking price</p>
+          <h2 className="text-3xl font-bold text-[#1A1C20] mb-5">
+            ₹ {carDetails.Expected_price}
+          </h2>
+
           {/* AI Score */}
-          <div className="p-4 bg-blue-50 rounded-xl mb-4">
-            <p className="font-semibold text-lg">AI Predicted Score</p>
-            <div className="flex items-center gap-2 mt-1">
-              <Star className="text-yellow-500" />
-              {/* <span className="text-2xl font-bold">{carDetails.aiScore}/10</span> */}
-            </div>
+          <div className="rounded-xl bg-[#F5F2EA] p-4 mb-5">
+            <p className="text-sm font-medium text-[#1A1C20] mb-3">AI estimated price range</p>
+            {carDetails?.priceRange ? (
+              <p className="text-lg font-semibold text-[#1A1C20]">
+                ₹{carDetails.priceRange.lowerBound.toLocaleString("en-IN")} – ₹{carDetails.priceRange.upperBound.toLocaleString("en-IN")}
+              </p>
+            ) : (
+              <p className="text-[#8A8A85] text-sm">Calculating price range…</p>
+            )}
           </div>
 
           {/* CTA Buttons */}
-          <button className="w-full bg-blue-600 text-white py-2 rounded-lg mb-2" onClick={() => { getSellerDetails(carDetails._id) }}>
-            Get Seller Details
+          <button
+            className="w-full bg-[#1A1C20] hover:bg-[#2B2E34] text-white font-medium py-3 rounded-xl transition-colors"
+            onClick={() => { getSellerDetails(carDetails._id) }}
+          >
+            Get seller details
           </button>
         </div>
       </div>
 
       {
         sellerModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
             <div className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
 
               {/* Close Button */}
               <button
                 onClick={() => { setSellerModal(false) }}
-                className="absolute right-4 top-4 text-gray-500 hover:text-black"
+                className="absolute right-5 top-5 text-[#8A8A85] hover:text-[#1A1C20] transition-colors"
               >
                 ✕
               </button>
 
-              <h2 className="mb-4 text-xl font-semibold text-gray-800">
-                Seller Details
+              <h2 className="mb-5 text-xl font-semibold text-[#1A1C20]">
+                Seller details
               </h2>
 
-              <div className="space-y-2 text-gray-700">
-                <p><span className="font-medium">Name:</span> { seller.name }</p>
-                <p><span className="font-medium">Mobile:</span> { seller.mobile }</p>
-                <p><span className="font-medium">City:</span> { carDetails.City }</p>
+              <div className="space-y-3">
+                <div className="flex justify-between border-b border-black/5 pb-2">
+                  <span className="text-sm text-[#8A8A85]">Name</span>
+                  <span className="font-medium text-[#1A1C20]">{seller.name}</span>
+                </div>
+                <div className="flex justify-between border-b border-black/5 pb-2">
+                  <span className="text-sm text-[#8A8A85]">Mobile</span>
+                  <span className="font-medium text-[#1A1C20]">{seller.mobile}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-[#8A8A85]">City</span>
+                  <span className="font-medium text-[#1A1C20]">{carDetails.City}</span>
+                </div>
               </div>
 
               <div className="mt-6 flex gap-3">
-                <a
-                  href={`tel:${seller.mobile}`}
-                  className="flex-1 rounded-lg bg-green-600 py-2 text-center text-white hover:bg-green-700"
-                >
+
+
+                <a href={`tel:${seller.mobile}`}
+                  className="flex-1 rounded-xl bg-[#2F6B52] py-2.5 text-center text-white font-medium hover:bg-[#26583F] transition-colors">
                   📞 Call
                 </a>
 
-                <a
-                  href={`https://wa.me/${seller.mobile}`}
+
+
+                <a href={`https://wa.me/${seller.mobile}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 rounded-lg bg-emerald-500 py-2 text-center text-white hover:bg-emerald-600"
-                >
+                  className="flex-1 rounded-xl bg-[#25D366] py-2.5 text-center text-white font-medium hover:bg-[#1FB959] transition-colors">
                   💬 WhatsApp
                 </a>
               </div>
@@ -115,10 +144,10 @@ export default function CarDetails() {
 
 
       {/* Specifications */}
-      <div className="mt-10">
-        <h2 className="text-2xl font-bold mb-4">Specifications</h2>
+      <div className="mt-12">
+        <h2 className="text-2xl font-bold text-[#1A1C20] mb-4">Specifications</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
 
           {/* <Spec icon={<Gauge />} label="Mileage" value={carDetails.mileage} /> */}
           <Spec icon={<Fuel />} label="Fuel Type" value={carDetails.Fuel_type} />
@@ -131,7 +160,7 @@ export default function CarDetails() {
 
       {/* Description */}
       <div className="mt-10">
-        <h2 className="text-2xl font-bold mb-3">Overview</h2>
+        <h2 className="text-2xl font-bold text-[#1A1C20] mb-3">Overview</h2>
         {/* <p className="text-gray-600 leading-relaxed">{carDetails.description}</p> */}
       </div>
     </div>
@@ -140,11 +169,13 @@ export default function CarDetails() {
 
 function Spec({ icon, label, value }) {
   return (
-    <div className="flex items-center gap-3 p-4 border rounded-lg shadow-sm">
-      <div className="text-blue-600">{icon}</div>
+    <div className="flex items-center gap-3 p-4 bg-white rounded-xl border border-black/5 shadow-sm hover:border-[#B8862E]/40 transition-colors">
+      <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#B8862E]/10 text-[#B8862E] shrink-0">
+        {icon}
+      </div>
       <div>
-        <p className="font-semibold">{label}</p>
-        <p className="text-gray-600">{value}</p>
+        <p className="text-xs text-[#8A8A85]">{label}</p>
+        <p className="font-semibold text-[#1A1C20]">{value}</p>
       </div>
     </div>
   );

@@ -27,6 +27,8 @@ export default function ListingForm() {
         Owner_type: '1st Owner',
         City: '',
         Area: '',
+        Engine_capacity: '',
+        Max_power: '',
         Expected_price: '',
         image: null
     })
@@ -248,6 +250,42 @@ export default function ListingForm() {
                         </select>
                     </div>
 
+                    {/* Engine Capacity + Max Power */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Engine Capacity (cc)
+                            </label>
+                            <input
+                                type="number"
+                                name="Engine_capacity"
+                                value={CarDetails.Engine_capacity}
+                                onChange={handleChange}
+                                required
+                                placeholder="e.g. 1197"
+                                className="w-full px-4 py-3 rounded-xl border border-gray-300
+            focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Max Power (bhp)
+                            </label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                name="Max_power"
+                                value={CarDetails.Max_power}
+                                onChange={handleChange}
+                                required
+                                placeholder="e.g. 88.5"
+                                className="w-full px-4 py-3 rounded-xl border border-gray-300
+            focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            />
+                        </div>
+                    </div>
+
                     {/* Owner Type */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -328,13 +366,13 @@ export default function ListingForm() {
                             id="image"
                             name="image"
                             onChange={async (e) => {
-                                setCarDetails({...CarDetails, image: e.target.files[0]});
+                                setCarDetails({ ...CarDetails, image: e.target.files[0] });
                             }}
                             className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white cursor-pointer"
                         />
                     </div>
 
-                    
+
 
                     {/* Submit Button */}
                     <button type="submit" className="w-full py-3 mt-2 bg-orange-500 text-white font-semibold rounded-xl hover:bg-orange-600 transition" disabled={loading}>
