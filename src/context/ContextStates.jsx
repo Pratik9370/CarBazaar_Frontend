@@ -235,8 +235,8 @@ const ContextStates = ({ children }) => {
       transmission_type: carDetails.Transmission,
       brand: carDetails.Brand,
       model: carDetails.Model,
-      engine: carDetails.Engine_capacity,      // Hardcoded for now
-      max_power: carDetails.Max_power     // Hardcoded for now
+      engine: Number(carDetails.Engine_capacity),      // Hardcoded for now
+      max_power: Number(carDetails.Max_power)     // Hardcoded for now
     };
     const response = await fetch(
       "https://carbazaar-backend-1whv.onrender.com/api/car/predict",
@@ -257,13 +257,6 @@ const ContextStates = ({ children }) => {
       priceRange: data.priceRange
     }));
   };
-
-
-  useEffect(() => {
-    fetchPrediction()
-  }, [carDetails])
-
-
 
 
   return (
