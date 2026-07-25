@@ -19,7 +19,7 @@ export function CarCard({ car }) {
   }
 
   return (
-    <Link to={'/cardetails'} onClick={()=>{setCarDetails(car), addRecentlyViewedCars(car._id), fetchPrediction()}}>
+    <Link to={'/cardetails'} onClick={()=>{fetchPrediction(car), setCarDetails(car), addRecentlyViewedCars(car._id)}}>
       <div
         key={car._id}
         className="relative bg-white rounded-2xl shadow-md border border-gray-400 hover:shadow-xl transition overflow-hidden cursor-pointer"
