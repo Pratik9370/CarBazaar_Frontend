@@ -165,6 +165,7 @@ const ContextStates = ({ children }) => {
   };
 
   const fetchCarList = async (filters) => {
+    setLoading(true)
     const response = await fetch("https://carbazaar-backend-1whv.onrender.com/api/car/carList", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -175,6 +176,7 @@ const ContextStates = ({ children }) => {
     const data = await response.json();
     await fetchUser()
     setCarList(data.filteredCars || []);
+    setLoading(false)
   };
 
   const saveCar = async (car_id) => {
@@ -260,7 +262,7 @@ const ContextStates = ({ children }) => {
   };
 
   return (
-    <ContextComponent.Provider value={{ search, setSearch, bodyType, setBodyType, fuelType, setFuelType, sendOTP, fetchLogin, fetchSignup, fetchCarList, fetchRegisterCar, carList, carDetails, setCarDetails, registeredCars, user, saveCar, unsaveCar, savedCars, loading, user_city, cars_in_userCity, addRecentlyViewedCars, recentlyViewedCars, fetchPrediction }}>
+    <ContextComponent.Provider value={{ search, setSearch, bodyType, setBodyType, fuelType, setFuelType, sendOTP, fetchLogin, fetchSignup, fetchCarList, fetchRegisterCar, carList, carDetails, setCarDetails, registeredCars, user, saveCar, unsaveCar, savedCars, loading, setLoading, user_city, cars_in_userCity, addRecentlyViewedCars, recentlyViewedCars, fetchPrediction }}>
       {children}
     </ContextComponent.Provider>
   )

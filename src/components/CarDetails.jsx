@@ -9,6 +9,7 @@ export default function CarDetails() {
   const [sellerModal, setSellerModal] = useState(false)
 
   const getSellerDetails = async (car_id) => {
+    setLoading(true)
     const response = await fetch('https://carbazaar-backend-1whv.onrender.com/api/car/carSellerDetails', {
       method: 'POST',
       headers: {
@@ -20,17 +21,19 @@ export default function CarDetails() {
     const data = await response.json()
     await setSeller({ name: data.name, mobile: data.mobile })
     setSellerModal(true)
+    setLoading(false)
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-8 bg-[#FAFAF8]">
+    <div className="min-h-screen bg-[#FAFAF7]">
+    <div className="max-w-6xl mx-auto p-4 md:p-8">
       {/* Car Title */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 flex-wrap">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1A1C20] tracking-tight">
+      <div className="mb-7">
+        <div className="flex items-center gap-3 flex-wrap">
+          <h1 className="font-serif text-3xl md:text-4xl text-[#14161A] tracking-tight">
             {carDetails.Model}
           </h1>
-          <span className="text-xs font-medium tracking-wide uppercase text-[#B8862E] bg-[#B8862E]/10 rounded-full px-3 py-1">
+          <span className="font-mono text-[11px] tracking-wide uppercase text-[#B8862E] bg-[#B8862E]/10 rounded-full px-3 py-1">
             {carDetails.Variant}
           </span>
         </div>
@@ -41,7 +44,7 @@ export default function CarDetails() {
 
         {/* Left – Images */}
         <div className="md:col-span-2 space-y-3">
-          <div className="rounded-2xl overflow-hidden shadow-sm border border-black/5">
+          <div className="rounded-2xl overflow-hidden border border-[#E8E6E1]">
             <img
               src={carDetails.image}
               className="w-full h-80 object-cover"
@@ -53,34 +56,34 @@ export default function CarDetails() {
               <img
                 key={i}
                 src={img}
-                className="h-28 w-full object-cover rounded-xl border border-black/5 hover:opacity-80 transition-opacity cursor-pointer"
+                className="h-28 w-full object-cover rounded-xl border border-[#E8E6E1] hover:opacity-80 transition-opacity cursor-pointer"
               />
             ))}
           </div>
         </div>
 
         {/* Right – Pricing + Score */}
-        <div className="bg-white rounded-2xl shadow-sm border border-black/5 p-6 h-fit sticky top-20">
-          <p className="text-sm text-[#8A8A85] mb-1">Asking price</p>
-          <h2 className="text-3xl font-bold text-[#1A1C20] mb-5">
+        <div className="bg-white rounded-2xl border border-[#E8E6E1] p-6 h-fit sticky top-20">
+          <p className="font-mono text-[11px] uppercase tracking-wide text-[#6B6D72] mb-1">Asking price</p>
+          <h2 className="font-serif text-3xl text-[#14161A] mb-5">
             ₹ {carDetails.Expected_price}
           </h2>
 
           {/* AI Score */}
-          <div className="rounded-xl bg-[#F5F2EA] p-4 mb-5">
-            <p className="text-sm font-medium text-[#1A1C20] mb-3">AI estimated price range</p>
+          <div className="rounded-xl bg-[#FAFAF7] border border-[#E8E6E1] p-4 mb-5">
+            <p className="text-sm font-medium text-[#14161A] mb-3">AI estimated price range</p>
             {carDetails?.priceRange ? (
-              <p className="text-lg font-semibold text-[#1A1C20]">
+              <p className="text-lg font-semibold text-[#14161A]">
                 ₹{carDetails.priceRange.lowerBound.toLocaleString("en-IN")} – ₹{carDetails.priceRange.upperBound.toLocaleString("en-IN")}
               </p>
             ) : (
-              <p className="text-[#8A8A85] text-sm">Calculating price range…</p>
+              <p className="text-[#6B6D72] text-sm">Calculating price range…</p>
             )}
           </div>
 
           {/* CTA Buttons */}
           <button
-            className="w-full bg-[#1A1C20] hover:bg-[#2B2E34] text-white font-medium py-3 rounded-xl transition-colors"
+            className="w-full bg-[#14161A] hover:bg-[#B8862E] text-white font-medium py-3 rounded-xl transition-colors duration-300"
             onClick={() => { getSellerDetails(carDetails._id) }}
           >
             Get seller details
@@ -96,27 +99,27 @@ export default function CarDetails() {
               {/* Close Button */}
               <button
                 onClick={() => { setSellerModal(false) }}
-                className="absolute right-5 top-5 text-[#8A8A85] hover:text-[#1A1C20] transition-colors"
+                className="absolute right-5 top-5 text-[#6B6D72] hover:text-[#14161A] transition-colors"
               >
                 ✕
               </button>
 
-              <h2 className="mb-5 text-xl font-semibold text-[#1A1C20]">
+              <h2 className="font-serif mb-5 text-xl text-[#14161A]">
                 Seller details
               </h2>
 
               <div className="space-y-3">
-                <div className="flex justify-between border-b border-black/5 pb-2">
-                  <span className="text-sm text-[#8A8A85]">Name</span>
-                  <span className="font-medium text-[#1A1C20]">{seller.name}</span>
+                <div className="flex justify-between border-b border-[#E8E6E1] pb-2">
+                  <span className="text-sm text-[#6B6D72]">Name</span>
+                  <span className="font-medium text-[#14161A]">{seller.name}</span>
                 </div>
-                <div className="flex justify-between border-b border-black/5 pb-2">
-                  <span className="text-sm text-[#8A8A85]">Mobile</span>
-                  <span className="font-medium text-[#1A1C20]">{seller.mobile}</span>
+                <div className="flex justify-between border-b border-[#E8E6E1] pb-2">
+                  <span className="text-sm text-[#6B6D72]">Mobile</span>
+                  <span className="font-mono font-medium text-[#14161A]">{seller.mobile}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-[#8A8A85]">City</span>
-                  <span className="font-medium text-[#1A1C20]">{carDetails.City}</span>
+                  <span className="text-sm text-[#6B6D72]">City</span>
+                  <span className="font-medium text-[#14161A]">{carDetails.City}</span>
                 </div>
               </div>
 
@@ -145,7 +148,7 @@ export default function CarDetails() {
 
       {/* Specifications */}
       <div className="mt-12">
-        <h2 className="text-2xl font-bold text-[#1A1C20] mb-4">Specifications</h2>
+        <h2 className="font-serif text-2xl text-[#14161A] mb-4">Specifications</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
 
@@ -160,22 +163,23 @@ export default function CarDetails() {
 
       {/* Description */}
       <div className="mt-10">
-        <h2 className="text-2xl font-bold text-[#1A1C20] mb-3">Overview</h2>
+        <h2 className="font-serif text-2xl text-[#14161A] mb-3">Overview</h2>
         {/* <p className="text-gray-600 leading-relaxed">{carDetails.description}</p> */}
       </div>
+    </div>
     </div>
   );
 }
 
 function Spec({ icon, label, value }) {
   return (
-    <div className="flex items-center gap-3 p-4 bg-white rounded-xl border border-black/5 shadow-sm hover:border-[#B8862E]/40 transition-colors">
+    <div className="flex items-center gap-3 p-4 bg-white rounded-xl border border-[#E8E6E1] hover:border-[#B8862E]/40 transition-colors">
       <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#B8862E]/10 text-[#B8862E] shrink-0">
         {icon}
       </div>
       <div>
-        <p className="text-xs text-[#8A8A85]">{label}</p>
-        <p className="font-semibold text-[#1A1C20]">{value}</p>
+        <p className="font-mono text-[10px] uppercase tracking-wide text-[#6B6D72]">{label}</p>
+        <p className="font-semibold text-[#14161A]">{value}</p>
       </div>
     </div>
   );

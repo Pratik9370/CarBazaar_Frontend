@@ -82,21 +82,24 @@ export default function ListingForm() {
         fetchRegisterCar(CarDetails)
     }
 
+    const fieldClass = "w-full px-4 py-3 rounded-xl border border-[#E8E6E1] bg-[#FAFAF7] text-[#14161A] placeholder:text-[#6B6D72]/70 focus:border-[#B8862E] focus:ring-2 focus:ring-[#B8862E]/30 focus:bg-white outline-none transition-colors";
+    const labelClass = "block text-sm font-medium text-[#14161A] mb-1.5";
 
     return (
-        <div className="min-h-screen flex justify-center items-center bg-gray-50 p-4">
+        <div className="min-h-screen flex justify-center items-center bg-[#FAFAF7] p-4 py-10">
 
-            <div className="w-full max-w-lg bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+            <div className="w-full max-w-lg bg-white rounded-2xl border border-[#E8E6E1] p-6 md:p-8">
 
-                <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
+                <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#B8862E] text-center mb-2">Sell your car</p>
+                <h2 className="font-serif text-2xl md:text-3xl text-[#14161A] text-center mb-7">
                     List Your Car
                 </h2>
 
-                <form className="space-y-6" onSubmit={handleSubmit} encType="multipart/form-data">
+                <form className="space-y-5" onSubmit={handleSubmit} encType="multipart/form-data">
 
                     {/* Brand */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Brand
                         </label>
                         <select
@@ -104,8 +107,7 @@ export default function ListingForm() {
                             name="Brand"
                             value={CarDetails.Brand}
                             onChange={handleBrandChange}
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            className={fieldClass}
                         >
                             <option>Select Brand</option>
                             {carMakes.map((make, index) => { return (<option key={index}>{make}</option>) })}
@@ -114,7 +116,7 @@ export default function ListingForm() {
 
                     {/* Car Model */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Model
                         </label>
                         <select
@@ -123,8 +125,7 @@ export default function ListingForm() {
                             value={CarDetails.Model}
                             onChange={handleModelChange}
                             placeholder="e.g. Swift, Creta, Nexon"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            className={fieldClass}
                         >
                             <option>Select Model</option>
                             {models.map((model, index) => { return (<option key={index}>{model}</option>) })}
@@ -132,7 +133,7 @@ export default function ListingForm() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Variant
                         </label>
                         <select
@@ -141,8 +142,7 @@ export default function ListingForm() {
                             value={CarDetails.Variant}
                             onChange={handleVariantChange}
                             placeholder="e.g. Swift, Creta, Nexon"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            className={fieldClass}
                         >
                             <option>Select Variant</option>
                             {variants.map((variant, index) => { return (<option key={index}>{variant.name}</option>) })}
@@ -152,7 +152,7 @@ export default function ListingForm() {
                     {/* Year + KM */}
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className={labelClass}>
                                 Registration Year
                             </label>
                             <input
@@ -162,13 +162,12 @@ export default function ListingForm() {
                                 required
                                 onChange={handleChange}
                                 placeholder="2018"
-                                className="w-full px-4 py-3 rounded-xl border border-gray-300 
-                focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                                className={fieldClass}
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className={labelClass}>
                                 KM Driven
                             </label>
                             <input
@@ -178,8 +177,7 @@ export default function ListingForm() {
                                 required
                                 onChange={handleChange}
                                 placeholder="45000"
-                                className="w-full px-4 py-3 rounded-xl border border-gray-300 
-                focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                                className={fieldClass}
                             />
                         </div>
                     </div>
@@ -187,7 +185,7 @@ export default function ListingForm() {
                     {/* Fuel Type */}
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className={labelClass}>
                                 Body Type
                             </label>
                             <select
@@ -195,8 +193,7 @@ export default function ListingForm() {
                                 name="Body_type"
                                 value={CarDetails.Body_type}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                                className={fieldClass}
                             >
                                 <option>Select Body Type</option>
                                 <option>Hatchback</option>
@@ -210,7 +207,7 @@ export default function ListingForm() {
                             </select>
                         </div>
 
-                        <div><label className="block text-sm font-medium text-gray-700 mb-1">
+                        <div><label className={labelClass}>
                             Fuel Type
                         </label>
                             <select
@@ -218,8 +215,7 @@ export default function ListingForm() {
                                 name="Fuel_type"
                                 value={CarDetails.Fuel_type}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                                className={fieldClass}
                             >
                                 <option>Select Fuel Type</option>
                                 <option>Petrol</option>
@@ -231,7 +227,7 @@ export default function ListingForm() {
 
                     {/* Transmission */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Transmission
                         </label>
                         <select
@@ -239,8 +235,7 @@ export default function ListingForm() {
                             name="Transmission"
                             value={CarDetails.Transmission}
                             required
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            className={fieldClass}
                         >
                             <option>Select Transmission</option>
                             <option>MT</option>
@@ -253,7 +248,7 @@ export default function ListingForm() {
                     {/* Engine Capacity + Max Power */}
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className={labelClass}>
                                 Engine Capacity (cc)
                             </label>
                             <input
@@ -263,13 +258,12 @@ export default function ListingForm() {
                                 onChange={handleChange}
                                 required
                                 placeholder="e.g. 1197"
-                                className="w-full px-4 py-3 rounded-xl border border-gray-300
-            focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                                className={fieldClass}
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className={labelClass}>
                                 Max Power (bhp)
                             </label>
                             <input
@@ -280,15 +274,14 @@ export default function ListingForm() {
                                 onChange={handleChange}
                                 required
                                 placeholder="e.g. 88.5"
-                                className="w-full px-4 py-3 rounded-xl border border-gray-300
-            focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                                className={fieldClass}
                             />
                         </div>
                     </div>
 
                     {/* Owner Type */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Owner Type
                         </label>
                         <select
@@ -296,8 +289,7 @@ export default function ListingForm() {
                             name="Owner-type"
                             value={CarDetails.Owner_type}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            className={fieldClass}
                         >
                             <option>1st Owner</option>
                             <option>2nd Owner</option>
@@ -308,7 +300,7 @@ export default function ListingForm() {
 
                     {/* City */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             City
                         </label>
                         <input
@@ -318,14 +310,13 @@ export default function ListingForm() {
                             onChange={handleChange}
                             required
                             placeholder="Your city"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            className={fieldClass}
                         />
                     </div>
 
                     {/* Area/Locality */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Area / Locality
                         </label>
                         <input
@@ -334,14 +325,13 @@ export default function ListingForm() {
                             value={CarDetails.Area}
                             onChange={handleChange}
                             placeholder="e.g. Baner, Wakad, Kothrud"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            className={fieldClass}
                         />
                     </div>
 
                     {/* Price */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Expected Price (₹)
                         </label>
                         <input
@@ -351,14 +341,13 @@ export default function ListingForm() {
                             onChange={handleChange}
                             required
                             placeholder="Example: 350000"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 
-              focus:border-orange-500 focus:ring-2 focus:ring-orange-300 outline-none"
+                            className={fieldClass}
                         />
                     </div>
 
                     {/* Photos */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Car Photos
                         </label>
                         <input
@@ -368,14 +357,14 @@ export default function ListingForm() {
                             onChange={async (e) => {
                                 setCarDetails({ ...CarDetails, image: e.target.files[0] });
                             }}
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white cursor-pointer"
+                            className="w-full px-4 py-3 rounded-xl border border-[#E8E6E1] bg-[#FAFAF7] text-sm text-[#6B6D72] cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#14161A] file:text-white file:text-sm file:font-medium hover:file:bg-[#B8862E] file:transition-colors file:cursor-pointer"
                         />
                     </div>
 
 
 
                     {/* Submit Button */}
-                    <button type="submit" className="w-full py-3 mt-2 bg-orange-500 text-white font-semibold rounded-xl hover:bg-orange-600 transition" disabled={loading}>
+                    <button type="submit" className="w-full py-3.5 mt-2 bg-[#14161A] text-white font-medium rounded-xl hover:bg-[#B8862E] transition-colors duration-300 disabled:opacity-50" disabled={loading}>
                         List Your Car
                     </button>
 

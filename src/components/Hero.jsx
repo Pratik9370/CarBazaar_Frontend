@@ -3,7 +3,7 @@ import bgImage from "../assets/images/bg.png";
 
 export function Hero() {
     return (
-        <section className="relative overflow-hidden min-h-[550px] md:min-h-[700px]">
+        <section className="relative overflow-hidden min-h-[500px] md:min-h-[640px]">
 
             {/* Background Image */}
             <img
@@ -13,16 +13,27 @@ export function Hero() {
             />
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-black/50"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#14161A]/70 via-[#14161A]/40 to-[#14161A]/75"></div>
 
             {/* Content */}
-            <div className="relative z-10 max-w-3xl h-full mx-auto text-center px-4 pt-20 md:pt-28">
+            <div className="relative z-10 max-w-3xl h-full mx-auto text-center px-4 pt-24 md:pt-32 flex flex-col items-center">
+
+                {/* Eyebrow */}
+                <span className="inline-flex items-center gap-2 text-[11px] md:text-xs font-mono uppercase tracking-[0.2em] text-[#E8C77E] mb-5 border border-white/25 rounded-full px-4 py-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#B8862E]"></span>
+                    Trusted by thousands of buyers
+                </span>
 
                 {/* Heading */}
-                <h1 className="text-white leading-tight mb-4 text-3xl md:text-5xl font-bold">
-                    Upgrade Your Drive With Confidence
+                <h1 className="font-serif text-white leading-[1.1] mb-4 text-4xl md:text-6xl">
+                    Upgrade Your Drive
+                    <br />
+                    With Confidence
                 </h1>
 
+                <p className="text-white/70 text-sm md:text-lg max-w-md mx-auto">
+                    Buy and sell quality used cars with transparent pricing and verified sellers.
+                </p>
 
                 {/* =================== SEARCH BOX =================== */}
                 {/* <div className="bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-lg mb-6 flex flex-col md:flex-row gap-3 mt-40">
@@ -38,28 +49,7 @@ export function Hero() {
                     </button>
                 </div> */}
 
-                <div className="mt-10 md:mt-40 w-full grid grid-cols-2 md:grid-cols-4 gap-6 md:gap">
-
-                    {[
-                        { icon: "✔️", text: "Verified Listings" },
-                        { icon: "💰", text: "Fair Pricing" },
-                        { icon: "🤖", text: "AI-powered Valuation" },
-                        { icon: "⭐", text: "Most Trusted" },
-                    ].map((item, i) => (
-                        <div
-                            key={i}
-                            className="flex flex-col items-center bg-white/10 backdrop-blur-md p-5 rounded-2xl 
-                 border border-white/20 shadow-lg transition-all duration-300 
-                 hover:scale-105 hover:bg-white/20"
-                        >
-                            <div className="text-2xl">{item.icon}</div>
-                            <p className="mt-3 text-white font-semibold text-base md:text-lg">
-                                {item.text}
-                            </p>
-                        </div>
-                    ))}
-
-                </div>
+                
 
 
 

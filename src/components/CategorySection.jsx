@@ -37,20 +37,23 @@ export default function CategorySection() {
   }
 
   return (
-    <div className="space-y-6 lg:mx-18">
+    <div className="bg-white rounded-2xl border border-[#E8E6E1] p-6 md:p-9">
 
-      <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-300">
-        <h1 className="text-2xl font-semibold text-gray-900 pb-4">
-          Cars by Category
-        </h1>
+      <div className="flex items-end justify-between flex-wrap gap-4 mb-7">
+        <div>
+          <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#B8862E] mb-2">Browse</p>
+          <h1 className="font-serif text-2xl md:text-3xl text-[#14161A]">
+            Cars by Category
+          </h1>
+        </div>
 
         {/* TABS */}
-        <div className="flex gap-3 border-b border-gray-300 pb-3">
+        <div className="flex gap-1 bg-[#FAFAF7] border border-[#E8E6E1] p-1 rounded-full">
           <button
             onClick={() => setSelectedTab("body-type")}
-            className={`px-6 py-2 rounded-full text-sm font-medium border ${selectedTab === "body-type"
-              ? "bg-blue-600 text-white border-blue-600"
-              : "bg-gray-50 text-gray-600 border-gray-200"
+            className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedTab === "body-type"
+              ? "bg-[#14161A] text-white"
+              : "text-[#6B6D72] hover:text-[#14161A]"
               }`}
           >
             Body Type
@@ -58,53 +61,53 @@ export default function CategorySection() {
 
           <button
             onClick={() => setSelectedTab("fuel-type")}
-            className={`px-6 py-2 rounded-full text-sm font-medium border ${selectedTab === "fuel-type"
-              ? "bg-blue-600 text-white border-blue-600"
-              : "bg-gray-50 text-gray-600 border-gray-200"
+            className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedTab === "fuel-type"
+              ? "bg-[#14161A] text-white"
+              : "text-[#6B6D72] hover:text-[#14161A]"
               }`}
           >
             Fuel Type
           </button>
         </div>
+      </div>
 
-        {/* CONTENT */}
-        <div className="mt-6">
+      {/* CONTENT */}
+      <div>
 
-          {/* Body Type Cards */}
-          {selectedTab === "body-type" && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 p-4 bg-blue-50 rounded-xl">
-              {bodyTypes.map((item, index) => (
-                <Link
-                  key={item.name}
-                  to="/carlists"
-                  onClick={()=>handleBodyCLick(item.name)}
-                  className="bg-white rounded-xl p-4 shadow hover:shadow-lg transition"
-                >
-                    <img src={item.image} alt={item.name} className="w-full md:h-100 object-contain" />
-                    <p className="text-center mt-2 font-medium">{item.name}</p>
-                </Link>
-              ))}
-            </div>
-          )}
+        {/* Body Type Cards */}
+        {selectedTab === "body-type" && (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {bodyTypes.map((item, index) => (
+              <Link
+                key={item.name}
+                to="/carlists"
+                onClick={()=>handleBodyCLick(item.name)}
+                className="group bg-[#FAFAF7] hover:bg-white rounded-xl p-6 border border-[#E8E6E1] hover:border-[#B8862E]/50 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5 transition-all duration-300"
+              >
+                  <img src={item.image} alt={item.name} className="w-full h-32 md:h-44 object-contain group-hover:scale-105 transition-transform duration-500 ease-out" />
+                  <p className="text-center mt-4 font-serif text-[#14161A]">{item.name}</p>
+              </Link>
+            ))}
+          </div>
+        )}
 
-          {/* Fuel Type Cards */}
-          {selectedTab === "fuel-type" && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 p-4 bg-green-50 rounded-xl">
-              {fuelTypes.map((item, index) => (
-                <Link
-                  key={item.name}
-                  to="/carlists"
-                  onClick={()=>handleFuelClick(item.name)}
-                  className="bg-white rounded-xl p-4 flex flex-col items-center shadow hover:shadow-md transition"
-                >
-                    <img src={item.image} alt={item.name} className="h-14 object-contain" />
-                    <p className="text-sm mt-2 font-medium">{item.name}</p>
-                </Link>
-              ))}
-            </div>
-          )}
+        {/* Fuel Type Cards */}
+        {selectedTab === "fuel-type" && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-5">
+            {fuelTypes.map((item, index) => (
+              <Link
+                key={item.name}
+                to="/carlists"
+                onClick={()=>handleFuelClick(item.name)}
+                className="group bg-[#FAFAF7] hover:bg-white rounded-xl p-5 flex flex-col items-center border border-[#E8E6E1] hover:border-[#B8862E]/50 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5 transition-all duration-300"
+              >
+                  <img src={item.image} alt={item.name} className="h-12 object-contain group-hover:scale-105 transition-transform duration-500 ease-out" />
+                  <p className="text-sm mt-3 font-mono uppercase tracking-wide text-[#6B6D72] group-hover:text-[#14161A] transition-colors">{item.name}</p>
+              </Link>
+            ))}
+          </div>
+        )}
 
-        </div>
       </div>
     </div>
   );

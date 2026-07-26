@@ -11,41 +11,39 @@ export function SearchBox() {
   }
 
   return (
-    <div className="md:max-w-4xl mx-auto mdm:px-6 -mt-12 relative z-10 rounded-2xl shadow-xl">
+    <div className="max-w-4xl mx-auto px-4 md:px-6 -mt-9 md:-mt-11 relative z-10">
 
-      <div className="bg-gray-900 text-white rounded-2xl p-3 md:p-8 shadow-2xl border border-white/10">
+      <div className="bg-white rounded-2xl p-2.5 md:p-3 shadow-xl shadow-black/10 border border-[#E8E6E1]">
 
-        {/* Search Row */}
         <div className="flex w-full items-center gap-2">
 
-          {/* Search Input */}
           <div className="relative flex-1">
+            <svg
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6B6D72]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
 
             <input
               type="text"
-              placeholder="Search cars by brand or model ..."
+              placeholder="Search cars by brand or model..."
               onChange={handleChange}
-              className="w-full p-4 py-3 rounded-lg bg-gray-800 border border-gray-700 
-              text-white focus:ring-2 focus:ring-orange-500 outline-none"
+              className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-[#FAFAF7] border border-[#E8E6E1]
+              text-[#14161A] placeholder:text-[#6B6D72]/70 focus:ring-2 focus:ring-[#B8862E]/40 focus:border-[#B8862E] focus:bg-white outline-none transition-colors"
             />
           </div>
 
-          {/* Search Button */}
           <Link to={'/carlists'} >
-            <button className="bg-orange-500 hover:bg-orange-600 transition text-white px-5 py-3 
-          rounded-lg text-base font-medium whitespace-nowrap">
-              <svg
-                className="w-5 h-5 text-gray-500"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
+            <button className="bg-[#14161A] hover:bg-[#B8862E] active:bg-[#8F6821] transition-colors duration-300 text-white px-6 py-3.5
+          rounded-xl text-sm font-medium whitespace-nowrap">
+              Search
             </button>
           </Link>
         </div>

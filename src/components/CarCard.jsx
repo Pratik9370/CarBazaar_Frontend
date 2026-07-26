@@ -1,5 +1,6 @@
+// CarCard.jsx
 import React, { useContext } from 'react';
-import { Bookmark, } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import { Link } from 'react-router-dom';
 import ContextComponent from '../context/ContextComponent';
 
@@ -18,36 +19,63 @@ export function CarCard({ car }) {
     }
   }
 
+  const isSaved = user?.SavedCars?.some(c => c._id === car._id);
+
   return (
     <Link to={'/cardetails'} onClick={()=>{fetchPrediction(car), setCarDetails(car), addRecentlyViewedCars(car._id)}}>
       <div
         key={car._id}
-        className="relative bg-white rounded-2xl shadow-md border border-gray-400 hover:shadow-xl transition overflow-hidden cursor-pointer"
+        className="group bg-white rounded-xl border border-[#E8E6E1] hover:border-[#B8862E]/50 hover:shadow-lg hover:shadow-black/5 transition-all duration-300 overflow-hidden cursor-pointer"
       >
-        {/* Bookmark icon */}
-        <div className="absolute top-2 right-2 bg-white rounded-full p-2 shadow" onClick={(e) => {
-          handleSaveClick(e, car._id)
-        }}>
-          <Bookmark size={20} className="text-gray-700" fill={user?.SavedCars?.some(c => c._id === car._id) ? 'currentColor' : 'none'} />
+        {/* Image */}
+        <div className="relative overflow-hidden bg-[#F1EFEA]">
+          <img
+            src={car.image}
+            className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            alt={car.Model}
+          />
+
+          {/* Reg year — plate style */}
+          <span className="absolute top-3 left-3 bg-[#14161A] text-white font-mono text-xs tracking-widest px-2.5 py-1 rounded">
+            {car.Reg_year}
+          </span>
+
+          {/* Bookmark icon */}
+          <button
+            className="absolute top-3 right-3 bg-white/95 hover:bg-white rounded-full p-2 shadow-sm transition-colors"
+            onClick={(e) => handleSaveClick(e, car._id)}
+            aria-label="Save car"
+          >
+            <Bookmark
+              size={17}
+              strokeWidth={1.75}
+              className={isSaved ? "text-[#B8862E]" : "text-[#6B6D72]"}
+              fill={isSaved ? 'currentColor' : 'none'}
+            />
+          </button>
         </div>
 
-        <img
-          src={car.image}
-          className="h-48 w-full object-cover"
-          alt={car.Model}
-        />
+        {/* Details */}
+        <div className="p-4">
+          <h3 className="font-serif text-lg text-[#14161A] truncate">
+            {`${car.Brand} ${car.Model}`}
+          </h3>
 
-        <div className="p-2 md:p-4">
-          <h3 className="text-xl font-semibold">{`${car.Brand} ${car.Model}`}</h3>
-          <p className="text-blue-600 text-lg">
-            ₹{car.Expected_price}
-          </p>
-
-          <div className="flex text-gray-700 text-sm mt-3">
-            <span>{car.KM} km | {car.Fuel_type} | {car.City}</span>
+          {/* Price — tag style */}
+          <div className="mt-2 pt-2 border-t border-[#E8E6E1]">
+            <p className="text-[#B8862E] text-xl font-semibold tracking-tight">
+              ₹{car.Expected_price}
+            </p>
           </div>
 
-          <p className="text-sm text-gray-500 mt-2">Year: {car.Reg_year}</p>
+          {/* Spec plate */}
+          <div className="flex items-center gap-2 mt-3 font-mono text-[11px] uppercase tracking-wide text-[#6B6D72]">
+            <span>{car.KM} km</span>
+            <span className="text-[#E8E6E1]">•</span>
+            <span>{car.Fuel_type}</span>
+            <span className="text-[#E8E6E1]">•</span>
+            <span className="truncate">{car.City}</span>
+          </div>
         </div>
       </div>
     </Link>
