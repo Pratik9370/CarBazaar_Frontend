@@ -142,10 +142,28 @@ const ContextStates = ({ children }) => {
   const fetchRegisterCar = async (CarDetails) => {
     try {
       const formData = new FormData();
+
+      // Add normal car details
       for (const key in CarDetails) {
-        formData.append(key, CarDetails[key]);
+        if (key !== "image" && key !== "images") {
+          formData.append(key, CarDetails[key]);
+        }
       }
-      setLoading(true)
+
+      // Front image
+      if (CarDetails.image) {
+        formData.append("image", CarDetails.image);
+      }
+
+      // Additional images
+      if (CarDetails.images) {
+        CarDetails.images.forEach((image) => {
+          formData.append("images", image);
+        });
+      }
+
+      setLoading(true);
+
       const response = await fetch(
         "https://carbazaar-backend-1whv.onrender.com/api/car/registerCar",
         {
@@ -156,11 +174,18 @@ const ContextStates = ({ children }) => {
       );
 
       const data = await response.json();
+
+      console.log("Images:", CarDetails.images);
+
       await fetchUser();
-      setLoading(false)
+
+      setLoading(false);
+
       alert(data.message);
+
     } catch (err) {
       console.error(err);
+      setLoading(false);
     }
   };
 
