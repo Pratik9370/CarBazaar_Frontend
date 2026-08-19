@@ -1,10 +1,23 @@
 // Navbar.jsx
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu, X, CircleUser } from "lucide-react";
 import { Link } from "react-router-dom";
+import ContextComponent from "../context/ContextComponent";
 
 export function Navbar() {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const { user, fetchLogout } = useContext(ContextComponent);
+
+    const handleLogout = async () => {
+        const success = await fetchLogout();
+
+        if (success) {
+            window.location.href = "/";
+        }
+    };
 
     return (
         <header className="bg-[#FAFAF7]/95 backdrop-blur-md py-4 px-6 sticky top-0 z-100 border-b border-[#E8E6E1]">
@@ -26,17 +39,26 @@ export function Navbar() {
                             <CircleUser size={22} strokeWidth={1.5} />
                         </button>
                     </Link>
-                    <Link to="/authentication/login">
-                        <button className="px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors">
-                            Log in
-                        </button>
-                    </Link>
+                    {user ? (<button
+                        className="px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors"
+                        onClick={handleLogout}
+                    >
+                        Logout
+                    </button>)
+                        : (<div>
+                            <Link to="/authentication/login">
+                                <button className="px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors">
+                                    Log in
+                                </button>
+                            </Link>
 
-                    <Link to="/authentication/signup">
-                        <button className="px-5 py-2.5 text-sm font-medium bg-[#14161A] text-white rounded-full hover:bg-[#B8862E] transition-colors duration-300">
-                            Sign up
-                        </button>
-                    </Link>
+                            <Link to="/authentication/signup">
+                                <button className="px-5 py-2.5 text-sm font-medium bg-[#14161A] text-white rounded-full hover:bg-[#B8862E] transition-colors duration-300">
+                                    Sign up
+                                </button>
+                            </Link>
+                        </div>
+                        )}
                 </div>
 
                 {/* Mobile Menu Icon */}
@@ -58,17 +80,25 @@ export function Navbar() {
                             <CircleUser size={20} strokeWidth={1.5} />
                             <span className="text-sm font-medium">Profile</span>
                         </Link>
-                        <Link to="/authentication/login">
-                            <button className="w-full text-left px-3 py-3 text-sm font-medium text-[#14161A] rounded-lg hover:bg-[#EFEDE7] transition-colors">
-                                Log in
-                            </button>
-                        </Link>
+                        {user ? (
+                            <button
+                                className="px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>) : (<div>
+                                <Link to="/authentication/login">
+                                    <button className="w-full text-left px-3 py-3 text-sm font-medium text-[#14161A] rounded-lg hover:bg-[#EFEDE7] transition-colors">
+                                        Log in
+                                    </button>
+                                </Link>
 
-                        <Link to="/authentication/signup">
-                            <button className="w-full mt-1 py-3 text-sm font-medium bg-[#14161A] text-white rounded-lg">
-                                Sign up
-                            </button>
-                        </Link>
+                                <Link to="/authentication/signup">
+                                    <button className="w-full mt-1 py-3 text-sm font-medium bg-[#14161A] text-white rounded-lg">
+                                        Sign up
+                                    </button>
+                                </Link>
+                            </div>)}
                     </nav>
                 </div>
             )}

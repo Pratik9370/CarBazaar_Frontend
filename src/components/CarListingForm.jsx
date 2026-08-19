@@ -187,7 +187,7 @@ export default function CarListingForm() {
             };
 
             const response = await fetch(
-                "https://carbazaar-backend-1whv.onrender.com/api/car/predict",
+                "http://localhost:3000/api/car/predict",
                 {
                     method: "POST",
                     headers: {
