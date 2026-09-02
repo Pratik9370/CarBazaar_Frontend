@@ -1,28 +1,38 @@
 // CarCard.jsx
 import React, { useContext } from 'react';
-import { Bookmark } from "lucide-react";
+import { Bookmark, Trash2 } from "lucide-react";
 import { Link } from 'react-router-dom';
 import ContextComponent from '../context/ContextComponent';
 
 export function CarCard({ car }) {
 
-  const { saveCar, unsaveCar, user, setCarDetails, addRecentlyViewedCars, fetchPrediction } = useContext(ContextComponent)
+  const { saveCar, unsaveCar, user, setCarDetails, addRecentlyViewedCars, fetchPrediction, deleteCar } = useContext(ContextComponent)
 
-  const handleSaveClick = (e,car_id) => {
+  const handleSaveClick = (e, car_id) => {
     e.stopPropagation();
     e.preventDefault();
-    if(!user.SavedCars.some(c => c._id==car_id)){
+    if (!user.SavedCars.some(c => c._id == car_id)) {
       saveCar(car_id)
     }
-    else{
+    else {
       unsaveCar(car_id)
     }
   }
 
+  const isOwner = user?._id === car?.Owner;
+  const handleDeleteClick = (e, car_id) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (window.confirm("Are you sure you want to delete this car?")) {
+      deleteCar(car_id);
+    }
+  };
+
   const isSaved = user?.SavedCars?.some(c => c._id === car._id);
 
   return (
-    <Link to={'/cardetails'} onClick={()=>{fetchPrediction(car), setCarDetails(car), addRecentlyViewedCars(car._id)}}>
+    <Link to={'/cardetails'} onClick={() => { fetchPrediction(car), setCarDetails(car), addRecentlyViewedCars(car._id) }}>
       <div
         key={car._id}
         className="group bg-white rounded-xl border border-[#E8E6E1] hover:border-[#B8862E]/50 hover:shadow-lg hover:shadow-black/5 transition-all duration-300 overflow-hidden cursor-pointer"
@@ -40,19 +50,39 @@ export function CarCard({ car }) {
             {car.Reg_year}
           </span>
 
-          {/* Bookmark icon */}
-          <button
-            className="absolute top-3 right-3 bg-white/95 hover:bg-white rounded-full p-2 shadow-sm transition-colors"
-            onClick={(e) => handleSaveClick(e, car._id)}
-            aria-label="Save car"
-          >
-            <Bookmark
-              size={17}
-              strokeWidth={1.75}
-              className={isSaved ? "text-[#B8862E]" : "text-[#6B6D72]"}
-              fill={isSaved ? 'currentColor' : 'none'}
-            />
-          </button>
+          {/* Action buttons */}
+          <div className="absolute top-3 right-3 flex gap-2">
+
+            {/* Delete - only owner */}
+            {isOwner && (
+              <button
+                className="bg-white/95 hover:bg-red-50 rounded-full p-2 shadow-sm transition-colors"
+                onClick={(e) => handleDeleteClick(e, car._id)}
+                aria-label="Delete car"
+              >
+                <Trash2
+                  size={17}
+                  strokeWidth={1.75}
+                  className="text-red-500"
+                />
+              </button>
+            )}
+
+            {/* Bookmark */}
+            <button
+              className="bg-white/95 hover:bg-white rounded-full p-2 shadow-sm transition-colors"
+              onClick={(e) => handleSaveClick(e, car._id)}
+              aria-label="Save car"
+            >
+              <Bookmark
+                size={17}
+                strokeWidth={1.75}
+                className={isSaved ? "text-[#B8862E]" : "text-[#6B6D72]"}
+                fill={isSaved ? "currentColor" : "none"}
+              />
+            </button>
+
+          </div>
         </div>
 
         {/* Details */}
