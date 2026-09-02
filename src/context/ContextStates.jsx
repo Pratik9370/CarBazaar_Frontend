@@ -252,6 +252,10 @@ const ContextStates = ({ children }) => {
   useEffect(() => {
     fetchUser();
     fetchCarsInUserCity();
+    fetch("https://carbazaar-ml-model.onrender.com/")
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
   }, []);
 
 
