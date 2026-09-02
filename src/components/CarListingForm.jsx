@@ -187,7 +187,7 @@ export default function CarListingForm() {
             };
 
             const response = await fetch(
-                "http://localhost:3000/api/car/predict",
+                "http://13.61.35.6/api/car/predict",
                 {
                     method: "POST",
                     headers: {
