@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Star, Gauge, Fuel, Settings, Calendar, Users } from "lucide-react";
+import { Star, Gauge, Fuel, Settings, Calendar, Users, User, Zap, MapPin } from "lucide-react";
 import ContextComponent from "../context/ContextComponent";
 
 export default function CarDetails() {
@@ -57,13 +57,13 @@ export default function CarDetails() {
             </div>
 
             <div className="grid grid-cols-3 gap-3">
-            <img src={carDetails?.image} onClick={()=>setImgFrame(carDetails?.image)} alt="" className="h-28 w-full object-cover rounded-xl border border-[#E8E6E1] hover:opacity-80 transition-opacity cursor-pointer" />
+              <img src={carDetails?.image} onClick={() => setImgFrame(carDetails?.image)} alt="" className="h-28 w-full object-cover rounded-xl border border-[#E8E6E1] hover:opacity-80 transition-opacity cursor-pointer" />
               {carDetails?.images?.map((img, i) => (
                 <img
                   key={i}
                   src={img.url}
                   alt={`Car additional view ${i + 1}`}
-                  onClick={()=>setImgFrame(img.url)}
+                  onClick={() => setImgFrame(img.url)}
                   className="h-28 w-full object-cover rounded-xl border border-[#E8E6E1] hover:opacity-80 transition-opacity cursor-pointer"
                 />
               ))}
@@ -150,12 +150,19 @@ export default function CarDetails() {
         )}
 
         {/* Specifications */}
+        {/* Specifications */}
         <div className="mt-12">
           <h2 className="font-serif text-2xl text-[#14161A] mb-4">Specifications</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <Spec icon={<Fuel />} label="Fuel Type" value={carDetails?.Fuel_type} />
             <Spec icon={<Settings />} label="Transmission" value={carDetails?.Transmission} />
             <Spec icon={<Calendar />} label="Model Year" value={carDetails?.Reg_year} />
+            <Spec icon={<Gauge />} label="KM Driven" value={carDetails?.KM} />
+            <Spec icon={<Users />} label="Seating capcity" value={carDetails?.Seating_capacity} />
+            <Spec icon={<User />} label="Owner type" value={carDetails?.Owner_type} />
+            <Spec icon={<Zap />} label="Engine Capacity" value={`${carDetails?.Engine_capacity} CC`} />
+            <Spec icon={<Gauge />} label="Max Power" value={`${carDetails?.Max_power} bhp`} />
+            <Spec icon={<MapPin />} label="City" value={carDetails?.City} />
           </div>
         </div>
 
