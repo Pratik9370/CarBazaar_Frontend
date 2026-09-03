@@ -202,6 +202,7 @@ const ContextStates = ({ children }) => {
     const data = await response.json();
     await fetchUser()
     setCarList(data.filteredCars || []);
+    console.log(data.filteredCars)
     setLoading(false)
   };
 

@@ -29,7 +29,6 @@ const Authentication = ({ authMode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`${mode.toUpperCase()} Form submitted:`, formData);
     // Authentication logic
     isSignUp ? await fetchSignup(formData.username, formData.mobile, formData.password) : await fetchLogin(formData.mobile, formData.password)
     navigate(from, { replace: true });
