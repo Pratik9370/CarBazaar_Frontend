@@ -11,7 +11,7 @@ export default function CarDetails() {
   const getSellerDetails = async (car_id) => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/api/car/carSellerDetails', {
+      const response = await fetch('https://carbazaar.duckdns.org/api/car/carSellerDetails', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'

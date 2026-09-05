@@ -184,7 +184,7 @@ export default function CarListingForm() {
             };
 
             const response = await fetch(
-                "http://localhost:3000/api/car/predict",
+                "https://carbazaar.duckdns.org/api/car/predict",
                 {
                     method: "POST",
                     headers: {

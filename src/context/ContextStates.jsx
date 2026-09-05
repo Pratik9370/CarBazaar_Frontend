@@ -21,7 +21,7 @@ const ContextStates = ({ children }) => {
   const sendOTP = async (mobile, username) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:3000/api/auth/sendOTP', {
+      const response = await fetch('https://carbazaar.duckdns.org/api/auth/sendOTP', {
         method: 'Post',
         headers: {
           "Content-Type": "application/json"
@@ -40,7 +40,7 @@ const ContextStates = ({ children }) => {
   const fetchLogin = async (mobile, otp) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      const response = await fetch('https://carbazaar.duckdns.org/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ const ContextStates = ({ children }) => {
   const fetchSignup = async (name, mobile, otp) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:3000/api/auth/signup', {
+      const response = await fetch('https://carbazaar.duckdns.org/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ const ContextStates = ({ children }) => {
   const fetchUser = async () => {
 
     const response = await fetch(
-      `http://localhost:3000/api/auth/getUser`,
+      `https://carbazaar.duckdns.org/api/auth/getUser`,
       {
         method: "GET",
         headers: {
@@ -105,7 +105,7 @@ const ContextStates = ({ children }) => {
         const { latitude, longitude } = position.coords;
 
         const res = await fetch(
-          "http://localhost:3000/api/auth/getCarsInUserCity",
+          "https://carbazaar.duckdns.org/api/auth/getCarsInUserCity",
           {
             method: "POST",
             headers: {
@@ -125,7 +125,7 @@ const ContextStates = ({ children }) => {
       },
       async () => {
         const res = await fetch(
-          "http://localhost:3000/api/auth/getCarsInUserCity",
+          "https://carbazaar.duckdns.org/api/auth/getCarsInUserCity",
           {
             method: "POST",
           }
@@ -166,7 +166,7 @@ const ContextStates = ({ children }) => {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:3000/api/car/registerCar",
+        "https://carbazaar.duckdns.org/api/car/registerCar",
         {
           method: "POST",
           body: formData,
@@ -192,7 +192,7 @@ const ContextStates = ({ children }) => {
 
   const fetchCarList = async (filters) => {
     setLoading(true)
-    const response = await fetch("http://localhost:3000/api/car/carList", {
+    const response = await fetch("https://carbazaar.duckdns.org/api/car/carList", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(filters), // filters already includes `search` from the caller
@@ -208,7 +208,7 @@ const ContextStates = ({ children }) => {
   const saveCar = async (car_id) => {
     const user_id = user._id
     console.log(user_id, car_id)
-    const response = await fetch('http://localhost:3000/api/car/saveCar', {
+    const response = await fetch('https://carbazaar.duckdns.org/api/car/saveCar', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -224,7 +224,7 @@ const ContextStates = ({ children }) => {
   const unsaveCar = async (car_id) => {
     const user_id = user._id
     console.log(user_id, car_id)
-    const response = await fetch('http://localhost:3000/api/car/unsaveCar', {
+    const response = await fetch('https://carbazaar.duckdns.org/api/car/unsaveCar', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -241,7 +241,7 @@ const ContextStates = ({ children }) => {
       setLoading(true);
 
       const response = await fetch(
-        `http://localhost:3000/api/car/deleteCar/${car_id}`,
+        `https://carbazaar.duckdns.org/api/car/deleteCar/${car_id}`,
         {
           method: "DELETE",
           credentials: "include"
@@ -276,7 +276,7 @@ const ContextStates = ({ children }) => {
 
 
   const addRecentlyViewedCars = async (car_id) => {
-    const response = await fetch(`http://localhost:3000/api/car/recentlyViewedCars`, {
+    const response = await fetch(`https://carbazaar.duckdns.org/api/car/recentlyViewedCars`, {
       method: 'Post',
       headers: {
         'Content-type': 'application/json'
@@ -312,7 +312,7 @@ const ContextStates = ({ children }) => {
     };
 
     const response = await fetch(
-      "http://localhost:3000/api/car/predict",
+      "https://carbazaar.duckdns.org/api/car/predict",
       {
         method: "POST",
         headers: {
@@ -333,7 +333,7 @@ const ContextStates = ({ children }) => {
   const fetchLogout = async () => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:3000/api/auth/logout', {
+      const response = await fetch('https://carbazaar.duckdns.org/api/auth/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
