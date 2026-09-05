@@ -1,14 +1,18 @@
-import React, { useState, useContext } from "react";
-import ContextComponent from "../context/ContextComponent";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export function SearchBox() {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
-  const { fetchCarList, search, setSearch } = useContext(ContextComponent)
+  const handleSearch = () => {
+    const trimmed = query.trim();
+    navigate(trimmed ? `/carlists?search=${encodeURIComponent(trimmed)}` : "/carlists");
+  };
 
-  const handleChange = (e) => {
-    setSearch(e.target.value)
-    fetchCarList()
-  }
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSearch();
+  };
 
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-6 -mt-9 md:-mt-11 relative z-10">
@@ -34,18 +38,21 @@ export function SearchBox() {
             <input
               type="text"
               placeholder="Search cars by brand or model..."
-              onChange={handleChange}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-[#FAFAF7] border border-[#E8E6E1]
               text-[#14161A] placeholder:text-[#6B6D72]/70 focus:ring-2 focus:ring-[#B8862E]/40 focus:border-[#B8862E] focus:bg-white outline-none transition-colors"
             />
           </div>
 
-          <Link to={'/carlists'} >
-            <button className="bg-[#14161A] hover:bg-[#B8862E] active:bg-[#8F6821] transition-colors duration-300 text-white px-6 py-3.5
-          rounded-xl text-sm font-medium whitespace-nowrap">
-              Search
-            </button>
-          </Link>
+          <button
+            onClick={handleSearch}
+            className="bg-[#14161A] hover:bg-[#B8862E] active:bg-[#8F6821] transition-colors duration-300 text-white px-6 py-3.5
+          rounded-xl text-sm font-medium whitespace-nowrap"
+          >
+            Search
+          </button>
         </div>
 
       </div>

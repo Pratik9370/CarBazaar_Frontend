@@ -1,23 +1,40 @@
-import React, { useContext, useEffect } from 'react';
-import { useState, useMemo } from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { SlidersHorizontal } from "lucide-react";
 import CarCard from './CarCard'
 import ContextComponent from '../context/ContextComponent';
 import Loader from './Loader';
 
-export default function CarListPage() {
-  const { bodyType, fuelType, carList, fetchCarList, search, setSearch, loading } = useContext(ContextComponent)
-  const [showFilters, setShowFilters] = useState(false);
+const DEFAULT_PRICE = 2000000;
 
-  const [filters, setFilters] = useState({
-    price: 2000000,
-    fuel: fuelType,
-    body: bodyType,
-    transmission: "",
-    brand: "",
-    year: "",
-    city: ""
-  });
+export default function CarListPage() {
+  const { carList, fetchCarList, loading } = useContext(ContextComponent);
+  const [showFilters, setShowFilters] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // The URL is now the single source of truth for every filter.
+  const filters = {
+    price: Number(searchParams.get('price')) || DEFAULT_PRICE,
+    fuel: searchParams.get('fuel') || "",
+    body: searchParams.get('body') || "",
+    transmission: searchParams.get('transmission') || "",
+    brand: searchParams.get('brand') || "",
+    year: searchParams.get('year') || "",
+    city: searchParams.get('city') || "",
+  };
+  const search = searchParams.get('search') || "";
+
+  // Merge one key into the URL, dropping it entirely when it's back to "no filter".
+  const updateFilter = (key, value) => {
+    const next = new URLSearchParams(searchParams);
+    const isEmpty = value === "" || value == null ||
+      (key === 'price' && Number(value) === DEFAULT_PRICE);
+    if (isEmpty) next.delete(key);
+    else next.set(key, value);
+    setSearchParams(next, { replace: true });
+  };
+
+  const setSearch = (value) => updateFilter('search', value);
 
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -28,63 +45,38 @@ export default function CarListPage() {
         transmission: filters.transmission,
         brand: filters.brand,
         year: filters.year,
-        city: filters.city
+        city: filters.city,
+        search, // was being tracked but never actually sent before — now it is
       });
-    }, 300); // debounce 300ms
+    }, 300);
 
     return () => clearTimeout(delay);
-  }, [filters, search]);
+  }, [searchParams]);
 
-  // Build the list of currently active filters as chips
-  const activeFilters = useMemo(() => {
+  const activeFilters = (() => {
     const labels = {
-      fuel: "Fuel",
-      body: "Body",
-      transmission: "Transmission",
-      brand: "Brand",
-      year: "Year",
-      city: "City",
+      fuel: "Fuel", body: "Body", transmission: "Transmission",
+      brand: "Brand", year: "Year", city: "City",
     };
-
     const chips = Object.entries(filters)
       .filter(([key, value]) => key !== "price" && value)
       .map(([key, value]) => ({ key, label: `${labels[key]}: ${value}` }));
 
-    if (filters.price < 2000000) {
+    if (filters.price < DEFAULT_PRICE) {
       chips.push({ key: "price", label: `Max Price: ₹${filters.price.toLocaleString()}` });
     }
-
-    if (search) {
-      chips.push({ key: "search", label: `Search: ${search}` });
-    }
-
+    if (search) chips.push({ key: "search", label: `Search: ${search}` });
     return chips;
-  }, [filters, search]);
+  })();
 
-  const removeFilter = (key) => {
-    if (key === "search") {
-      setSearch("");
-    } else if (key === "price") {
-      setFilters({ ...filters, price: 2000000 });
-    } else {
-      setFilters({ ...filters, [key]: "" });
-    }
-  };
+  const removeFilter = (key) => updateFilter(key, "");
 
-  const clearAllFilters = () => {
-    setFilters({
-      price: 2000000,
-      fuel: "",
-      body: "",
-      transmission: "",
-      brand: "",
-      year: "",
-      city: "",
-    });
-    setSearch("");
-  };
+  const clearAllFilters = () => setSearchParams(new URLSearchParams(), { replace: true });
 
   const filterFieldClass = "w-full p-3 mb-4 rounded-xl border border-[#E8E6E1] bg-[#FAFAF7] text-[#14161A] placeholder:text-[#6B6D72]/70 focus:ring-2 focus:ring-[#B8862E]/40 focus:border-[#B8862E] focus:bg-white outline-none transition-colors";
+
+  const currentYear = new Date().getFullYear();
+  const yearOptions = Array.from({ length: 25 }, (_, i) => String(currentYear - i));
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 px-4 lg:px-16 py-6 bg-[#FAFAF7] min-h-screen">
@@ -104,7 +96,7 @@ export default function CarListPage() {
         <div className="fixed inset-0 z-50 bg-black/40 lg:hidden">
           <div className="absolute left-5 top-0 h-full w-[90%] max-w-sm bg-none shadow-xl overflow-y-auto custom-scrollbar">
 
-            
+
 
             <div className="sticky top-20">
               <div className="">
@@ -136,7 +128,7 @@ export default function CarListPage() {
                     placeholder="Search City"
                     name="city"
                     value={filters.city}
-                    onChange={(e) => setFilters({ ...filters, [e.target.name]: e.target.value })}
+                    onChange={(e) => updateFilter('city', e.target.value)}   // was: setFilters({ ...filters, [e.target.name]: e.target.value })
                     className={filterFieldClass}
                   />
 
@@ -148,7 +140,7 @@ export default function CarListPage() {
                       min="200000"
                       max="2000000"
                       value={filters.price}
-                      onChange={(e) => setFilters({ ...filters, price: Number(e.target.value) })}
+                      onChange={(e) => updateFilter('price', e.target.value)}   // was: setFilters({ ...filters, price: Number(e.target.value) })
                       className="w-full accent-[#B8862E]"
                     />
                   </div>
@@ -160,16 +152,16 @@ export default function CarListPage() {
                     {
                       key: "transmission",
                       label: "Transmission",
-                      options: ["MT", "AT", "AMT", "CVT", "DCT"],
+                      options: ["Manual", "Automatic", "AMT", "CVT", "DCT"],
                     },
-                    { key: "brand", label: "Brand", options: ["Tata", "Hyundai", "Honda", "Maruti"] },
-                    { key: "year", label: "Year", options: ["2020", "2021", "2022", "2023"] },
+                    { key: "brand", label: "Brand", options: ["Tata", "Hyundai", "Honda", "Maruti", "Mahindra", "Toyota", "Kia", "Volkswagen", "Skoda", "Renault", "Ford", "MG", "Nissan"] },
+                    { key: "year", label: "Year", options: yearOptions },
                   ].map((f) => (
                     <div key={f.key} className="mb-4">
                       <p className="text-sm font-medium text-[#14161A] mb-1">{f.label}</p>
                       <select
                         value={filters[f.key]}
-                        onChange={(e) => setFilters({ ...filters, [f.key]: e.target.value })}
+                        onChange={(e) => updateFilter(f.key, e.target.value)}   // was: setFilters({ ...filters, [f.key]: e.target.value })
                         className={filterFieldClass + " mt-1"}
                       >
                         <option value="">Any</option>
@@ -208,7 +200,7 @@ export default function CarListPage() {
             placeholder="Search City"
             name="city"
             value={filters.city}
-            onChange={(e) => setFilters({ ...filters, [e.target.name]: e.target.value })}
+            onChange={(e) => updateFilter('city', e.target.value)}
             className={filterFieldClass}
           />
 
@@ -217,10 +209,10 @@ export default function CarListPage() {
             <p className="font-mono text-xs uppercase tracking-wide text-[#6B6D72] mb-1">Max Price: <span className="text-[#14161A] font-semibold">₹{filters.price.toLocaleString()}</span></p>
             <input
               type="range"
-              min="200000"
-              max="2000000"
+              min="100000"
+              max="20000000"
               value={filters.price}
-              onChange={(e) => setFilters({ ...filters, price: Number(e.target.value) })}
+              onChange={(e) => updateFilter('price', e.target.value)}
               className="w-full accent-[#B8862E]"
             />
           </div>
@@ -228,20 +220,20 @@ export default function CarListPage() {
           {/* Select Filters */}
           {[
             { key: "fuel", label: "Fuel Type", options: ["Petrol", "Diesel", "CNG", "Electric"] },
-            { key: "body", label: "Body Type", options: ["Hatchback", "Sedan", "SUV"] },
+            { key: "body", label: "Body Type", options: ["Hatchback", "Sedan", "Utility Vehicles"] },
             {
               key: "transmission",
               label: "Transmission",
               options: ["Manual", "Automatic", "AMT", "CVT", "DCT"],
             },
-            { key: "brand", label: "Brand", options: ["Tata", "Hyundai", "Honda", "Maruti"] },
-            { key: "year", label: "Year", options: ["2020", "2021", "2022", "2023"] },
+            { key: "brand", label: "Brand", options: ["Tata", "Hyundai", "Honda", "Maruti", "Mahindra", "Toyota", "Kia", "Volkswagen", "Skoda", "Renault", "Ford", "MG", "Nissan"] },
+            { key: "year", label: "Year", options: yearOptions },
           ].map((f) => (
             <div key={f.key} className="mb-4">
               <p className="text-sm font-medium text-[#14161A] mb-1">{f.label}</p>
               <select
                 value={filters[f.key]}
-                onChange={(e) => setFilters({ ...filters, [f.key]: e.target.value })}
+                onChange={(e) => updateFilter(f.key, e.target.value)}
                 className={filterFieldClass + " mt-1"}
               >
                 <option value="">Any</option>
@@ -283,8 +275,8 @@ export default function CarListPage() {
             </button>
           </div>
         )}
-        
-        {loading?(<div><Loader/></div>):(<div>
+
+        {loading ? (<div><Loader /></div>) : (<div>
           <div className="flex items-baseline justify-between mb-5">
             <h2 className="font-serif text-2xl text-[#14161A]">
               Available Cars
@@ -294,20 +286,20 @@ export default function CarListPage() {
             </span>
           </div>
 
-        {carList?.length === 0 ? (
-          <div className="bg-white border border-[#E8E6E1] rounded-2xl py-16 text-center">
-            <p className="text-[#6B6D72]">No cars match your filters.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {carList?.map((car) => (
-              <CarCard key={car._id} car={car} />
-            ))}
-          </div>
-        )}</div>)}
-        
-        
-        
+          {carList?.length === 0 ? (
+            <div className="bg-white border border-[#E8E6E1] rounded-2xl py-16 text-center">
+              <p className="text-[#6B6D72]">No cars match your filters.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {carList?.map((car) => (
+                <CarCard key={car._id} car={car} />
+              ))}
+            </div>
+          )}</div>)}
+
+
+
       </div>
 
 

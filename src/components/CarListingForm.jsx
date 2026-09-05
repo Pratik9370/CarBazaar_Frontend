@@ -5,10 +5,7 @@ import carDataset from "../Data/carDataset";
 
 /* ---------- static option lists ---------- */
 
-const BODY_TYPES = [
-    "Hatchback", "Premium Hatchback", "SUV", "Compact SUV",
-    "Micro SUV", "MUV", "Sedan", "Compact Sedan"
-];
+const BODY_TYPES = ["Hatchback", "SUV", "Crossover", "MUV/MPV", "Sedan"];
 
 const FUEL_TYPES = ["Petrol", "Diesel", "CNG", "Electric"];
 const TRANSMISSIONS = ["MT", "AMT", "AT", "CVT"];
@@ -187,7 +184,7 @@ export default function CarListingForm() {
             };
 
             const response = await fetch(
-                "https://carbazaar.duckdns.org/api/car/predict",
+                "http://localhost:3000/api/car/predict",
                 {
                     method: "POST",
                     headers: {

@@ -7,7 +7,7 @@ import Sedan_image from '../assets/images/Sedan.png'
 
 const bodyTypes = [
   { name: "Hatchback", image: Hatchback_image },
-  { name: "SUV", image: SUV_image },
+  { name: "Utility Vehicles", image: SUV_image },
   { name: "Sedan", image: Sedan_image },
 ];
 
@@ -28,10 +28,10 @@ export default function CategorySection() {
   const handleFuelClick = async (name) => {
     await setFuelType(name)
     await setBodyType('')
-    
+
   }
 
-  const handleBodyCLick = async(name)=>{
+  const handleBodyCLick = async (name) => {
     await setBodyType(name)
     await setFuelType('')
   }
@@ -80,12 +80,11 @@ export default function CategorySection() {
             {bodyTypes.map((item, index) => (
               <Link
                 key={item.name}
-                to="/carlists"
-                onClick={()=>handleBodyCLick(item.name)}
+                to={`/carlists?body=${encodeURIComponent(item.name)}`}
                 className="group bg-[#FAFAF7] hover:bg-white rounded-xl p-6 border border-[#E8E6E1] hover:border-[#B8862E]/50 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5 transition-all duration-300"
               >
-                  <img src={item.image} alt={item.name} className="w-full h-32 md:h-44 object-contain group-hover:scale-105 transition-transform duration-500 ease-out" />
-                  <p className="text-center mt-4 font-serif text-[#14161A]">{item.name}</p>
+                <img src={item.image} alt={item.name} className="w-full h-32 md:h-44 object-contain group-hover:scale-105 transition-transform duration-500 ease-out" />
+                <p className="text-center mt-4 font-serif text-[#14161A]">{item.name}</p>
               </Link>
             ))}
           </div>
@@ -97,12 +96,11 @@ export default function CategorySection() {
             {fuelTypes.map((item, index) => (
               <Link
                 key={item.name}
-                to="/carlists"
-                onClick={()=>handleFuelClick(item.name)}
+                to={`/carlists?fuel=${encodeURIComponent(item.name)}`}
                 className="group bg-[#FAFAF7] hover:bg-white rounded-xl p-5 flex flex-col items-center border border-[#E8E6E1] hover:border-[#B8862E]/50 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5 transition-all duration-300"
               >
-                  <img src={item.image} alt={item.name} className="h-12 object-contain group-hover:scale-105 transition-transform duration-500 ease-out" />
-                  <p className="text-sm mt-3 font-mono uppercase tracking-wide text-[#6B6D72] group-hover:text-[#14161A] transition-colors">{item.name}</p>
+                <img src={item.image} alt={item.name} className="h-12 object-contain group-hover:scale-105 transition-transform duration-500 ease-out" />
+                <p className="text-sm mt-3 font-mono uppercase tracking-wide text-[#6B6D72] group-hover:text-[#14161A] transition-colors">{item.name}</p>
               </Link>
             ))}
           </div>

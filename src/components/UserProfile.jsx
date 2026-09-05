@@ -7,11 +7,11 @@ export default function UserProfile() {
 
     const { registeredCars, savedCars, user } = useContext(ContextComponent)
     return (
-        <div className="min-h-screen bg-[#FAFAF7] p-10">
+        <div className="min-h-screen bg-[#FAFAF7]">
 
             {/* Profile Header */}
-            {user?.name ? (<div className="max-w-7xl mx-auto ">
-                <div className="bg-white border border-[#E8E6E1] rounded-2xl p-6 mx-2 lg:mx-18 flex gap-5 items-center mb-5">
+            {user?.name ? (<div className="max-w-7xl mx-auto pt-10">
+                <div className="bg-white border border-[#E8E6E1] rounded-2xl p-6 mx-2 flex gap-5 items-center mb-5 md:w-60">
                     <div className="w-16 h-16 rounded-full bg-[#B8862E]/10 flex items-center justify-center shrink-0">
                         <User size={28} strokeWidth={1.5} className="text-[#B8862E]" />
                     </div>

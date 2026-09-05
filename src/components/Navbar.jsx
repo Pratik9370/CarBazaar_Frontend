@@ -74,31 +74,38 @@ export function Navbar() {
 
             {/* Mobile Menu */}
             {open && (
-                <div className="md:hidden border-t border-[#E8E6E1] mt-4 pt-4 px-1 pb-2 space-y-1">
-                    <nav className="flex flex-col gap-1">
-                        <Link to={'profile'} className="flex items-center gap-3 px-3 py-3 rounded-lg text-[#14161A] hover:bg-[#EFEDE7] transition-colors">
+                <div className="md:hidden border-t border-[#E8E6E1] mt-4 pt-4 px-1 pb-2 space-y-2">
+                    <nav className="flex flex-col gap-2">
+                        <Link
+                            to={'profile'}
+                            className="flex items-center gap-3 px-3 py-3 rounded-full text-[#14161A] hover:bg-[#EFEDE7] transition-colors"
+                        >
                             <CircleUser size={20} strokeWidth={1.5} />
                             <span className="text-sm font-medium">Profile</span>
                         </Link>
+
                         {user ? (
                             <button
-                                className="px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors"
+                                className="w-full px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors"
                                 onClick={handleLogout}
                             >
                                 Logout
-                            </button>) : (<div>
-                                <Link to="/authentication/login">
-                                    <button className="w-full text-left px-3 py-3 text-sm font-medium text-[#14161A] rounded-lg hover:bg-[#EFEDE7] transition-colors">
+                            </button>
+                        ) : (
+                            <div className="flex flex-col gap-2">
+                                <Link to="/authentication/login" className="w-full">
+                                    <button className="w-full px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors">
                                         Log in
                                     </button>
                                 </Link>
 
-                                <Link to="/authentication/signup">
-                                    <button className="w-full mt-1 py-3 text-sm font-medium bg-[#14161A] text-white rounded-lg">
+                                <Link to="/authentication/signup" className="w-full">
+                                    <button className="w-full px-5 py-2.5 text-sm font-medium bg-[#14161A] text-white rounded-full hover:bg-[#B8862E] transition-colors duration-300">
                                         Sign up
                                     </button>
                                 </Link>
-                            </div>)}
+                            </div>
+                        )}
                     </nav>
                 </div>
             )}

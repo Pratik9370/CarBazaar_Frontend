@@ -26,7 +26,7 @@ const Home = () => {
         <div className="lg:flex lg:justify-start lg:gap-10">
 
           {/* Left rail — Sell Car */}
-          <div className="lg:max-w-80 mb-6 lg:mb-0 min-w-0 lg:sticky top-20">
+          <div className="lg:min-w-[20vw] mb-6 lg:mb-0 min-w-0 lg:sticky top-20 mx-5 lg:mx-0">
             <SellCarBox />
           </div>
 
