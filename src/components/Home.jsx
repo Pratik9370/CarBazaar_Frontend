@@ -7,6 +7,7 @@ import CategorySection from './CategorySection';
 import SellCarBox from './SellCarBox';
 import { useContext } from 'react';
 import ContextComponent from '../context/ContextComponent';
+import CarCard from './CarCard';
 
 const Home = () => {
 
@@ -35,7 +36,20 @@ const Home = () => {
             <CategorySection />
             {savedCars?.length > 0 && (<SpecificCars cars={savedCars} heading={"Saved Cars"} />)}
             {recentlyViewedCars?.length > 0 && (<SpecificCars cars={recentlyViewedCars} heading={`Recently viewed cars`} />)}
-            {cars_in_userCity?.length > 0 && (<SpecificCars cars={cars_in_userCity} heading={`Cars available in ${user_city}`} />)}
+            <div className='bg-white rounded-2xl border border-[#E8E6E1] pt-6 p-4 min-w-0'>
+              <div className="flex items-center justify-between px-5 mb-5">
+                <h2 className="font-serif text-xl md:text-2xl text-[#14161A]">Cars available in {user_city}</h2>
+                <span className="font-mono text-[11px] uppercase tracking-wide text-[#6B6D72]">
+                  {cars_in_userCity.length} {cars_in_userCity.length === 1 ? "car" : "cars"}
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {cars_in_userCity?.map((car) => (
+                  <CarCard key={car._id} car={car} />
+                ))}
+              </div>
+
+            </div>
           </div>
 
         </div>
