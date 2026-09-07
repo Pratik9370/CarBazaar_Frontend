@@ -36,7 +36,10 @@ const Home = () => {
             <CategorySection />
             {savedCars?.length > 0 && (<SpecificCars cars={savedCars} heading={"Saved Cars"} />)}
             {recentlyViewedCars?.length > 0 && (<SpecificCars cars={recentlyViewedCars} heading={`Recently viewed cars`} />)}
-            <div className='bg-white rounded-2xl border border-[#E8E6E1] pt-6 p-4 min-w-0'>
+            <div className='lg:hidden'>
+              {cars_in_userCity?.length > 0 && (<SpecificCars cars={cars_in_userCity} heading={`Cars available in ${user_city}`} />)}
+            </div>
+            <div className='bg-white rounded-2xl border border-[#E8E6E1] pt-6 p-4 min-w-0 hidden lg:block'>
               <div className="flex items-center justify-between px-5 mb-5">
                 <h2 className="font-serif text-xl md:text-2xl text-[#14161A]">Cars available in {user_city}</h2>
                 <span className="font-mono text-[11px] uppercase tracking-wide text-[#6B6D72]">
