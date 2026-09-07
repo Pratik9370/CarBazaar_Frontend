@@ -32,7 +32,7 @@ const Home = () => {
           </div>
 
           {/* Right column — car listings */}
-          <div className=" lg:space-y-8 min-w-0">
+          <div className="space-y-2 lg:space-y-8 min-w-0">
             <CategorySection />
             {savedCars?.length > 0 && (<SpecificCars cars={savedCars} heading={"Saved Cars"} />)}
             {recentlyViewedCars?.length > 0 && (<SpecificCars cars={recentlyViewedCars} heading={`Recently viewed cars`} />)}
