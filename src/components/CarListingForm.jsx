@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useContext, useEffect, useRef } from "react";
-import ContextComponent from "../context/ContextComponent";
+import { useNavigate } from "react-router-dom"; import ContextComponent from "../context/ContextComponent";
 import carDataset from "../Data/carDataset";
 
 /* ---------- static option lists ---------- */
@@ -39,10 +39,12 @@ export default function CarListingForm() {
     const [variants, setVariants] = useState([]);
     const [step, setStep] = useState(0);
     const [touched, setTouched] = useState(false);
-    
+
     // Separate refs for front/cover image and additional gallery images
     const frontImageInputRef = useRef(null);
     const galleryInputRef = useRef(null);
+
+    const navigate = useNavigate();
 
     const { fetchRegisterCar, loading } = useContext(ContextComponent);
 
@@ -179,11 +181,11 @@ export default function CarListingForm() {
                 brand: currentCarState.Brand,
                 model: currentCarState.Model,
                 engine: Number(currentCarState.Engine_capacity),
-                max_power: Number(currentCarState.Max_power)
+                max_power: Math.round(Number(currentCarState.Max_power))
             };
 
             const response = await fetch(
-                "https://carbazaar.duckdns.org/api/car/predict",
+                "http://localhost:3000/api/car/predict",
                 {
                     method: "POST",
                     headers: {
@@ -244,7 +246,7 @@ export default function CarListingForm() {
         setTouched(true);
         if (!canAdvance) return;
         setTouched(false);
-        
+
         const nextStepIndex = step + 1;
         const nextKey = STEPS[nextStepIndex]?.key;
 
@@ -252,7 +254,7 @@ export default function CarListingForm() {
         if (nextKey === "valuation") {
             await fetchPrediction(CarDetails);
         }
-        
+
         setStep(s => Math.min(s + 1, STEPS.length - 1));
     };
 
@@ -261,19 +263,32 @@ export default function CarListingForm() {
         setStep(s => Math.max(s - 1, 0));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!stepValid.vehicle || !stepValid.specs || !stepValid.docs || !stepValid.price) return;
-        
-        // Combine front image and gallery images into final payload structure
+
+        if (
+            !stepValid.vehicle ||
+            !stepValid.specs ||
+            !stepValid.docs ||
+            !stepValid.price
+        ) {
+            return;
+        }
+
         const allImages = galleryImages.map(img => img.file);
 
         const payload = {
             ...CarDetails,
-            image: frontImage?.file || null,      // front/cover image
-            images: allImages,                     // full gallery array including front image
+            image: frontImage?.file || null,
+            images: allImages,
         };
-        fetchRegisterCar(payload);
+
+        const result = await fetchRegisterCar(payload);
+
+        // Redirect only after successful listing
+        if (result?.success) {
+            navigate('/profile');
+        }
     };
 
     /* ---------- render ---------- */
@@ -520,7 +535,7 @@ function SpecsStep({ CarDetails, handleChange }) {
                 </div>
                 <div>
                     <label className={labelClass}>Max Power (bhp) *</label>
-                    <input type="number" step="0.1" name="Max_power" value={CarDetails.Max_power} onChange={handleChange} required placeholder="e.g. 88.5" className={fieldClass} />
+                    <input type="number" name="Max_power" value={CarDetails.Max_power} onChange={handleChange} required placeholder="e.g. 87" className={fieldClass} />
                 </div>
             </div>
 
@@ -577,9 +592,9 @@ function DocsStep({ CarDetails, handleChange }) {
 function ValuationStep({ CarDetails, calculatingValuation, onRefresh }) {
     return (
         <div className="space-y-6 text-center py-4">
-            <StepHeading 
-                title="AI Market Valuation" 
-                subtitle="Based on market trends, condition, and vehicle specifications provided" 
+            <StepHeading
+                title="AI Market Valuation"
+                subtitle="Based on market trends, condition, and vehicle specifications provided"
             />
 
             {calculatingValuation ? (
@@ -706,7 +721,7 @@ function PriceStep({ CarDetails, handleChange, frontImage, frontImageInputRef, h
 
 function ReviewStep({ CarDetails, frontImage, galleryImages }) {
     const totalImagesCount = (frontImage ? 1 : 0) + galleryImages.length;
-    
+
     const rows = [
         ["Brand / Model", `${CarDetails.Brand} ${CarDetails.Model}`],
         ["Variant", CarDetails.Variant],

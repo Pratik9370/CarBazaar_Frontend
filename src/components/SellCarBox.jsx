@@ -11,7 +11,7 @@ export default function SellCarBox() {
                 <div className="pointer-events-none absolute -bottom-20 -right-20 w-64 h-64 bg-[#B8862E]/20 rounded-full blur-3xl"></div>
 
                 <div className="relative">
-                    <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#B8862E] mb-3">Sell in minutes</p>
+                    <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#B8862E] mb-3">Register in minutes</p>
                     <h2 className="font-serif text-2xl lg:text-3xl text-white leading-snug mb-3">
                         Want to Sell Your Car?
                     </h2>

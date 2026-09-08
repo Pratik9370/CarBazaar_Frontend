@@ -14,7 +14,7 @@ const Authentication = ({ authMode }) => {
   const from = location.state?.from || "/";
 
   const { sendOTP, fetchLogin, fetchSignup, fetchUser, loading } = useContext(ContextComponent)
-
+  const [otpCooldown, setOtpCooldown] = useState(0);
   const [formData, setFormData] = useState({
     username: '',
     mobile: null,
@@ -26,6 +26,16 @@ const Authentication = ({ authMode }) => {
   useEffect(() => {
     setMode(authMode)
   }, [authMode])
+
+  useEffect(() => {
+    if (otpCooldown <= 0) return;
+
+    const timer = setInterval(() => {
+      setOtpCooldown(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [otpCooldown]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,17 +56,30 @@ const Authentication = ({ authMode }) => {
 
   const isSignUp = mode === 'signup';
 
-  const handleSendOTP = () => {
+  const handleSendOTP = async () => {
+    if (otpCooldown > 0) return;
+
     if (isSignUp && formData.username.trim().length < 1) {
-      return alert("User Name cant be empty")
+      return alert("User Name can't be empty");
     }
-    (isNaN(formData.mobile) || formData.mobile.length != 10) ? alert("Enter valid mobile number") :
-      (isSignUp ? sendOTP(formData.mobile, formData.username) : sendOTP(formData.mobile, ''))
-  }
+
+    if (isNaN(formData.mobile) || formData.mobile.length !== 10) {
+      return alert("Enter valid mobile number");
+    }
+
+    const result = isSignUp
+      ? await sendOTP(formData.mobile, formData.username)
+      : await sendOTP(formData.mobile, '');
+
+    // Start 5-minute cooldown ONLY if OTP was successfully sent
+    if (result?.success) {
+      setOtpCooldown(300);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#FAFAF7] flex items-center justify-center p-4">
-      {loading?(<Loader/>):(<div className="bg-white border border-[#E8E6E1] rounded-2xl overflow-hidden max-w-5xl w-full flex relative">
+      {loading ? (<Loader />) : (<div className="bg-white border border-[#E8E6E1] rounded-2xl overflow-hidden max-w-5xl w-full flex relative">
 
         {/* Left Side - Image (Animated) */}
         {/* Note: Tailwind transition classes are used to slide the image */}
@@ -134,11 +157,15 @@ const Authentication = ({ authMode }) => {
 
                 <button
                   type="button"
-                  className="whitespace-nowrap bg-[#14161A] hover:bg-[#B8862E] text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors duration-300 disabled:opacity-50"
+                  className="whitespace-nowrap bg-[#14161A] hover:bg-[#B8862E] text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={handleSendOTP}
-                  disabled={loading}
+                  disabled={loading || otpCooldown > 0}
                 >
-                  Send OTP
+                  {otpCooldown > 0
+                    ? `Resend OTP in ${Math.floor(otpCooldown / 60)}:${String(
+                      otpCooldown % 60
+                    ).padStart(2, "0")}`
+                    : "Send OTP"}
                 </button>
               </div>
 
