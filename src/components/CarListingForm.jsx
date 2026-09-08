@@ -112,15 +112,21 @@ export default function CarListingForm() {
 
     const handleVariantChange = (e) => {
         const selectedVariant = e.target.value;
-        const variant = variants.find((v) => v.name == selectedVariant);
+        const variant = variants.find((v) => v.name === selectedVariant);
+
         if (!variant) return;
+
         setCarDetails(prev => ({
             ...prev,
             Variant: selectedVariant,
-            Body_type: variant.body_type,
             Fuel_type: variant.fuel[0],
             Transmission: variant.transmission[0],
             Seating_capacity: variant.seating,
+            Engine_capacity:
+                variant.engine_cc ??
+                variant.engine_cc_petrol ??
+                variant.engine_cc_diesel ??
+                "",
         }));
     };
 
