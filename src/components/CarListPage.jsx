@@ -154,7 +154,7 @@ export default function CarListPage() {
                       label: "Transmission",
                       options: ["Manual", "Automatic", "AMT", "CVT", "DCT"],
                     },
-                    { key: "brand", label: "Brand", options: ["Tata", "Hyundai", "Honda", "Maruti", "Mahindra", "Toyota", "Kia", "Volkswagen", "Skoda", "Renault", "Ford", "MG", "Nissan"] },
+                    { key: "brand", label: "Brand", options: ["Tata", "Hyundai", "Honda", "Maruti Suzuki", "Mahindra", "Toyota", "Kia", "Volkswagen", "Skoda", "Renault", "Ford", "MG", "Nissan"] },
                     { key: "year", label: "Year", options: yearOptions },
                   ].map((f) => (
                     <div key={f.key} className="mb-4">
@@ -226,7 +226,7 @@ export default function CarListPage() {
               label: "Transmission",
               options: ["Manual", "Automatic", "AMT", "CVT", "DCT"],
             },
-            { key: "brand", label: "Brand", options: ["Tata", "Hyundai", "Honda", "Maruti", "Mahindra", "Toyota", "Kia", "Volkswagen", "Skoda", "Renault", "Ford", "MG", "Nissan"] },
+            { key: "brand", label: "Brand", options: ["Tata", "Hyundai", "Honda", "Maruti Suzuki", "Mahindra", "Toyota", "Kia", "Volkswagen", "Skoda", "Renault", "Ford", "MG", "Nissan"] },
             { key: "year", label: "Year", options: yearOptions },
           ].map((f) => (
             <div key={f.key} className="mb-4">
