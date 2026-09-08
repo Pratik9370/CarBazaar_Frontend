@@ -196,13 +196,13 @@ CarBazaar/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/CarBazaar-Frontend.git
+git clone https://github.com/Pratik9370/CarBazaar_Frontend.git
 ```
 
 ### 2. Navigate to the Project
 
 ```bash
-cd CarBazaar-Frontend
+cd CarBazaar_Frontend
 ```
 
 ### 3. Install Dependencies
@@ -231,7 +231,7 @@ http://localhost:5173
 The frontend communicates with the CarBazaar backend for authentication, car listings, user data, and other API operations.
 
 **Backend Repository:**
-`https://github.com/your-username/CarBazaar-Backend`
+`https://github.com/Pratik9370/CarBazaar_Backend.git`
 
 ---
 
@@ -240,7 +240,7 @@ The frontend communicates with the CarBazaar backend for authentication, car lis
 The ML service is responsible for estimating the price range of used cars.
 
 **ML Repository:**
-`https://github.com/your-username/CarBazaar-ML`
+`https://github.com/Pratik9370/CarBazaar_ML_model.git`
 
 ---
 
