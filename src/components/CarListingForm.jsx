@@ -145,7 +145,6 @@ export default function CarListingForm() {
             .filter(f => f.type.startsWith("image/"))
             .map(f => ({ file: f, url: URL.createObjectURL(f) }));
         setGalleryImages(prev => [...prev, ...newOnes]);
-        console.log(galleryImages)
     };
 
     const handleGalleryInput = (e) => {

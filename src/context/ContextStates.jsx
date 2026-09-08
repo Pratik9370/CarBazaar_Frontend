@@ -73,7 +73,6 @@ const ContextStates = ({ children }) => {
       await fetchUser()
       alert(data.message)
       setLoading(false)
-      console.log(data)
     } catch (err) {
       console.error(err)
     }
@@ -176,8 +175,6 @@ const ContextStates = ({ children }) => {
 
       const data = await response.json();
 
-      console.log("Images:", CarDetails.images);
-
       await fetchUser();
 
       setLoading(false);
@@ -207,7 +204,6 @@ const ContextStates = ({ children }) => {
 
   const saveCar = async (car_id) => {
     const user_id = user._id
-    console.log(user_id, car_id)
     const response = await fetch('https://carbazaar.duckdns.org/api/car/saveCar', {
       method: 'POST',
       headers: {
@@ -218,12 +214,10 @@ const ContextStates = ({ children }) => {
     })
     const data = await response.json()
     await fetchUser()
-    console.log(data)
   }
 
   const unsaveCar = async (car_id) => {
     const user_id = user._id
-    console.log(user_id, car_id)
     const response = await fetch('https://carbazaar.duckdns.org/api/car/unsaveCar', {
       method: 'POST',
       headers: {
@@ -253,8 +247,6 @@ const ContextStates = ({ children }) => {
       if (!response.ok) {
         throw new Error(data.message || "Failed to delete car");
       }
-
-      console.log(data.message);
 
       // Remove deleted car from car list
       setCarList((prevCars) =>
@@ -293,8 +285,6 @@ const ContextStates = ({ children }) => {
     fetchCarsInUserCity();
     fetch("https://carbazaar-ml-model.onrender.com")
       .then(res => res.json())
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
   }, []);
 
 
