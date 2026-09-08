@@ -45,15 +45,15 @@ export function Navbar() {
                     >
                         Logout
                     </button>)
-                        : (<div>
+                        : (<div className="flex items-center gap-3">
                             <Link to="/authentication/login">
-                                <button className="px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors">
+                                <button className="px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors cursor-pointer">
                                     Log in
                                 </button>
                             </Link>
 
                             <Link to="/authentication/signup">
-                                <button className="px-5 py-2.5 text-sm font-medium bg-[#14161A] text-white rounded-full hover:bg-[#B8862E] transition-colors duration-300">
+                                <button className="px-5 py-2.5 text-sm font-medium bg-[#14161A] text-white rounded-full hover:bg-[#B8862E] transition-colors duration-300 cursor-pointer">
                                     Sign up
                                 </button>
                             </Link>
@@ -92,15 +92,15 @@ export function Navbar() {
                                 Logout
                             </button>
                         ) : (
-                            <div className="flex flex-col gap-2">
-                                <Link to="/authentication/login" className="w-full">
-                                    <button className="w-full px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors">
+                            <div className="flex flex-col items-start gap-2 px-3">
+                                <Link to="/authentication/login">
+                                    <button className="px-5 py-2.5 text-sm font-medium text-[#14161A] border border-[#E8E6E1] rounded-full hover:border-[#B8862E] hover:text-[#B8862E] transition-colors cursor-pointer">
                                         Log in
                                     </button>
                                 </Link>
 
-                                <Link to="/authentication/signup" className="w-full">
-                                    <button className="w-full px-5 py-2.5 text-sm font-medium bg-[#14161A] text-white rounded-full hover:bg-[#B8862E] transition-colors duration-300">
+                                <Link to="/authentication/signup">
+                                    <button className="px-5 py-2.5 text-sm font-medium bg-[#14161A] text-white rounded-full hover:bg-[#B8862E] transition-colors duration-300 cursor-pointer">
                                         Sign up
                                     </button>
                                 </Link>
